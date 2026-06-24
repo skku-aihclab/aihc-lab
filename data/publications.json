@@ -82,31 +82,36 @@
       "y": "2024",
       "a": "Y. Choe, S. Lee, Y. Lim, S. Kim*",
       "t": "Machine learning-derived model for predicting poor post-treatment quality of life in Korean cancer survivors",
-      "v": "Supportive Care in Cancer, vol. 32"
+      "v": "Supportive Care in Cancer, vol. 32",
+      "d": "https://doi.org/10.1007/s00520-024-08347-z"
     },
     {
       "y": "2024",
       "a": "S. Lee, P. Bain, A. Musa, C. Baker, J. Li*",
       "t": "A Causal Network-Based Markov Decision Process Model for Intervention Planning",
-      "v": "IEEE Transactions on Automation Science and Engineering, vol. 21(1), pp. 706-720"
+      "v": "IEEE Transactions on Automation Science and Engineering, vol. 21(1), pp. 706-720",
+      "d": "https://doi.org/10.1109/TASE.2022.3228643"
     },
     {
       "y": "2022",
       "a": "J. Yun, J. Sim, S. Lee, Y. Yun*",
       "t": "Stronger association of perceived health with socio-economic inequality during COVID-19 pandemic than pre-pandemic era",
-      "v": "BMC Public Health, vol. 22(1)"
+      "v": "BMC Public Health, vol. 22(1)",
+      "d": "https://doi.org/10.1186/s12889-022-14176-8"
     },
     {
       "y": "2021",
       "a": "S. Lee, L. Liu, R. Radwin, J. Li*",
       "t": "Machine Learning in Manufacturing Ergonomics: Recent Advances, Challenges, and Opportunities",
-      "v": "IEEE Robotics and Automation Letters, vol. 6(3), pp. 5745-5752"
+      "v": "IEEE Robotics and Automation Letters, vol. 6(3), pp. 5745-5752",
+      "d": "https://doi.org/10.1109/LRA.2021.3084881"
     },
     {
       "y": "2021",
       "a": "S. Lee, P. Bain, A. Musa, C. Baker, J. Li*",
       "t": "An Integrated Opioid Prescription Optimization Framework for Total Joint Replacement Surgery Patients",
-      "v": "IISE Transactions on Healthcare Systems Engineering, vol. 11(3), pp. 209-223"
+      "v": "IISE Transactions on Healthcare Systems Engineering, vol. 11(3), pp. 209-223",
+      "d": "https://doi.org/10.1080/24725579.2021.1873878"
     },
     {
       "y": "2021",
@@ -119,13 +124,15 @@
       "y": "2021",
       "a": "S. Lee, P. Bain, A. Musa, J. Li*",
       "t": "A Markov chain model for analysis of physician workflow in primary care clinics",
-      "v": "Health Care Management Science, vol. 24, pp. 72-91"
+      "v": "Health Care Management Science, vol. 24, pp. 72-91",
+      "d": "https://doi.org/10.1007/s10729-020-09517-1"
     },
     {
       "y": "2021",
       "a": "S. Lee, S. Wei, V. White, P. Bain, C. Baker, J. Li*",
       "t": "Classification of Opioid Usage through Semi-supervised Learning for Total Joint Replacement Patients",
-      "v": "IEEE Journal of Biomedical and Health Informatics, vol. 25(1), pp. 189-200"
+      "v": "IEEE Journal of Biomedical and Health Informatics, vol. 25(1), pp. 189-200",
+      "d": "https://doi.org/10.1109/JBHI.2020.2992973"
     },
     {
       "y": "2020",
@@ -138,31 +145,36 @@
       "y": "2019",
       "a": "X. Zhong, S. Lee, C. Zhao, et al., J. Li*",
       "t": "Reducing COPD readmissions through predictive modeling and incentive-based interventions",
-      "v": "Health Care Management Science, vol. 22(1), pp. 121-139"
+      "v": "Health Care Management Science, vol. 22(1), pp. 121-139",
+      "d": "https://doi.org/10.1007/s10729-017-9426-2"
     },
     {
       "y": "2019",
       "a": "S. Lee, S. Wang, P. Bain, et al., J. Li*",
       "t": "Modeling and Analysis of Postdischarge Intervention Process to Reduce COPD Readmissions",
-      "v": "IEEE Transactions on Automation Science and Engineering, vol. 16(1), pp. 21-34"
+      "v": "IEEE Transactions on Automation Science and Engineering, vol. 16(1), pp. 21-34",
+      "d": "https://doi.org/10.1109/TASE.2018.2801318"
     },
     {
       "y": "2018",
       "a": "S. Lee, S. Wang, P. Bain, et al., J. Li*",
       "t": "Reducing COPD Readmissions: A Causal Bayesian Network Model",
-      "v": "IEEE Robotics and Automation Letters, vol. 3(4), pp. 4046-4053"
+      "v": "IEEE Robotics and Automation Letters, vol. 3(4), pp. 4046-4053",
+      "d": "https://doi.org/10.1109/LRA.2018.2861084"
     },
     {
       "y": "2018",
       "a": "Y. Son, S. Lee, S. Park, J. Lee*",
       "t": "Learning representative exemplars using one-class Gaussian process regression",
-      "v": "Pattern Recognition, vol. 74, pp. 185-197"
+      "v": "Pattern Recognition, vol. 74, pp. 185-197",
+      "d": "https://doi.org/10.1016/j.patcog.2017.09.002"
     },
     {
       "y": "2014",
       "a": "S. Lee, B. Koo, K. Jung*",
       "t": "Comparative Study of Dimension Reduction Methods for Highly Imbalanced Overlapping Churn Data",
-      "v": "Industrial Engineering & Management Systems, vol. 13(4), pp. 454-462"
+      "v": "Industrial Engineering & Management Systems, vol. 13(4), pp. 454-462",
+      "d": "https://doi.org/10.7232/iems.2014.13.4.454"
     }
   ],
   "conferences": [
