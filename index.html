@@ -245,7 +245,8 @@ img{max-width:100%;display:block}
 .imgbox.noimg::after{content:"이미지 준비 중";position:absolute;inset:0;display:grid;place-items:center;color:var(--steel);font-size:14px;font-weight:600}
 .article p{font-size:17px;line-height:1.85;color:var(--charcoal);margin:20px 0}
 .article figure{margin:30px 0}
-.article figure .imgbox{aspect-ratio:16/10;margin:0}
+.article figure .imgbox{aspect-ratio:auto;margin:0}
+.article figure .imgbox img{height:auto;object-fit:contain}
 .article figcaption{font-size:14.5px;color:var(--slate);margin-top:12px;line-height:1.6;text-align:center}
 .back-btn{display:inline-flex;align-items:center;gap:8px;margin-top:44px;font-size:14px;font-weight:700;color:var(--ink-deep);border:2px solid rgba(10,19,23,.14);border-radius:var(--r-full);padding:11px 22px;cursor:pointer;transition:.18s;background:none}
 .back-btn:hover{border-color:var(--ink-deep)}
@@ -542,7 +543,7 @@ img{max-width:100%;display:block}
         <h4>찾아오시는 길</h4>
         <div class="li">
           <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
-          <div><div class="lt">Address</div><div class="lv">성균관대학교 자연과학캠퍼스<br>경기도 수원시 장안구 서부로 2066</div></div>
+          <div><div class="lt">Address</div><div class="lv">성균관대학교 자연과학캠퍼스<br>경기도 수원시 장안구 서부로 2066 27409 호 </div></div>
         </div>
         <div class="li">
           <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/></svg></div>
@@ -687,11 +688,17 @@ img{max-width:100%;display:block}
 <!-- ============ ACTIVITY ============ -->
 <section class="page" id="activity">
   <div class="wrap section">
-    <div class="section-head reveal anchor" id="ac-news">
-      <div class="eyebrow">Activity</div>
-      <h2>News</h2>
+    <div class="sub-headrow reveal anchor" id="ac-news" style="margin:0 0 24px">
+      <div class="section-head" style="margin:0">
+        <div class="eyebrow">Activity</div>
+        <h2>News</h2>
+      </div>
+      <div class="cnav">
+        <button class="cbtn" data-track="newsTrack" data-dir="-1" aria-label="이전">‹</button>
+        <button class="cbtn" data-track="newsTrack" data-dir="1" aria-label="다음">›</button>
+      </div>
     </div>
-    <div class="news-grid" id="newsGrid"></div>
+    <div class="carousel reveal"><div class="ctrack" id="newsTrack"></div></div>
 
     <div class="sub-headrow anchor" id="ac-seminar">
       <h3 class="sub-head">Seminar</h3>
@@ -824,8 +831,8 @@ const news=[
     blocks:[
       {p:'2025년 11월 6일부터 11월 7일까지 대전 카이스트(KAIST)에서 열린 대한산업공학회 추계학술대회에 참가했습니다. 이번 학술대회에서는 우리 연구실에서 1건의 발표와 2건의 포스터 발표에 참여했습니다.'},
       {img:'2025추계2.png', cap:'신민영 석사과정의 "Detection of Left-Right Imbalances in Resistance Training Using Wearable Sensor"를 헬스케어 세션에서 발표했습니다.'},
-      {img:'2025-fall-2.jpg', cap:'박준우 학부생의 "Multimodal Fusion Approach for Reliable Molecular Toxicity Prediction" 포스터를 발표했습니다.'},
-      {img:'2025-fall-3.jpg', cap:'조다윗 학부생의 "Instruction Tuning을 활용한 대규모 언어 모델(LLM) 기반 생물의학 분야의 개체명 인식 성능 향상" 포스터를 발표했습니다.'},
+      {img:'2025추계3.jpg', cap:'박준우 학부생의 "Multimodal Fusion Approach for Reliable Molecular Toxicity Prediction" 포스터를 발표했습니다.'},
+      {img:'2025추계4.jpg', cap:'조다윗 학부생의 "Instruction Tuning을 활용한 대규모 언어 모델(LLM) 기반 생물의학 분야의 개체명 인식 성능 향상" 포스터를 발표했습니다.'},
       {p:'이번 학술대회를 통해 각자의 연구를 발표하고, 국내외 연구자들과 활발히 교류하며, 헬스케어·기계학습·멀티모달 AI를 아우르는 우리 연구실의 연구 방향을 다시 한 번 확인할 수 있었습니다. 학회 준비와 발표를 위해 애쓴 모든 연구실 구성원 여러분, 수고 많으셨습니다! 🎉'},
     ]
   },
@@ -841,12 +848,6 @@ const news=[
   },
 ];
 const newsById=id=>news.find(n=>n.id===id);
-
-/* Activity grid (cards) */
-newsGrid.innerHTML=news.map(n=>`<div class="news-card reveal" data-news="${n.id}">
-  <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
-  <div class="ndate">${n.term}</div><h4>${n.title}</h4><span class="ntag">${n.tag}</span>
-</div>`).join('');
 
 /* Home latest news (rows) */
 latestNews.innerHTML=news.map(n=>`<div class="news-row reveal" data-news="${n.id}"><span class="nt"><span class="rtag">${n.tag}</span>${n.title}</span><span class="nd">${n.term.replace('2025 · ','')} 2025</span></div>`).join('');
@@ -887,7 +888,7 @@ const albums=[
 /* Render carousels */
 function cardThumb(folder,hero){
   const icon='<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.8"/><path d="M21 15l-5-5L5 21"/></svg>';
-  if(hero)return `<div class="cthumb"><img src="images/${folder}/${hero}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='${icon.replace(/'/g,"&#39;")}'"></div>`;
+  if(hero)return `<div class="cthumb"><img src="images/${folder}/${encodeURIComponent(hero)}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='${icon.replace(/'/g,"&#39;")}'"></div>`;
   return `<div class="cthumb">${icon}</div>`;
 }
 function renderCarousel(trackId,items,folder,attr){
@@ -896,6 +897,7 @@ function renderCarousel(trackId,items,folder,attr){
     <div class="cbody"><div class="cdate">${it.term}</div><h4>${it.title}</h4><span class="ctag">${it.tag}</span></div>
   </div>`).join('');
 }
+renderCarousel('newsTrack',news,'news','data-news');
 renderCarousel('seminarTrack',seminars,'seminar','data-seminar');
 renderCarousel('albumTrack',albums,'album','data-album');
 
