@@ -1,0 +1,101 @@
+{
+  "masters": [
+    {
+      "ko": "신민영",
+      "en": "Minyoung Shin",
+      "init": "MS",
+      "img": "신민영.png",
+      "ri": [
+        "Healthcare",
+        "Few-Shot Learning",
+        "Domain Adaptation"
+      ]
+    },
+    {
+      "ko": "강지원",
+      "en": "Jiwon Kang",
+      "init": "JK",
+      "img": "강지원.png",
+      "ri": [
+        "Foundation Models for Timeseries"
+      ]
+    },
+    {
+      "ko": "최유정",
+      "en": "Yujeong Choi",
+      "init": "YC",
+      "img": "최유정.png",
+      "ri": [
+        "Multimodal Deep Learning",
+        "NLP",
+        "Few-Shot Learning"
+      ]
+    },
+    {
+      "ko": "조다윗",
+      "en": "Dawit Cho",
+      "init": "DC",
+      "img": "조다윗.png",
+      "ri": [
+        "NLP",
+        "NER",
+        "Clinical Notes",
+        "Biomedical Text Mining"
+      ]
+    }
+  ],
+  "undergraduate": [
+    {
+      "ko": "조윤아",
+      "en": "Yunah Jo",
+      "init": "YJ",
+      "img": "조윤아.png",
+      "ri": [
+        "Healthcare",
+        "Multimodal Deep Learning"
+      ]
+    },
+    {
+      "ko": "박호진",
+      "en": "Hojin Park",
+      "init": "HP",
+      "img": "박호진.png",
+      "ri": [
+        "Healthcare",
+        "Time-Series Modeling",
+        "Domain Adaptation"
+      ]
+    }
+  ],
+  "parttime": [
+    {
+      "ko": "나혜원",
+      "en": "Hyewon Na",
+      "init": "HN",
+      "img": "",
+      "ri": [
+        "Machine Learning for Engineering Design"
+      ]
+    }
+  ],
+  "alumni": [
+    {
+      "ko": "임유석",
+      "en": "M.S. 2024",
+      "init": "YL",
+      "img": "임유석.jpg",
+      "ri": [
+        "ICU Heparin Treatment Policies via Offline Reinforcement Learning"
+      ]
+    },
+    {
+      "ko": "임규희",
+      "en": "M.S. 2024",
+      "init": "KL",
+      "img": "임규희.jpg",
+      "ri": [
+        "Automatic Causality Extraction for COPD using NLP Models"
+      ]
+    }
+  ]
+}

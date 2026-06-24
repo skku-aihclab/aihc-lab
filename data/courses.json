@@ -1,0 +1,87 @@
+[
+  {
+    "term": "Spring 2026",
+    "cur": true,
+    "c": [
+      "Data Mining",
+      "Text Analytics and NLP (Graduate)"
+    ]
+  },
+  {
+    "term": "Fall 2025",
+    "cur": false,
+    "c": [
+      "Data Mining",
+      "Text Analytics and NLP (Graduate)"
+    ]
+  },
+  {
+    "term": "Spring 2025",
+    "cur": false,
+    "c": [
+      "Data Mining",
+      "Data Structures with Algorithms"
+    ]
+  },
+  {
+    "term": "Fall 2024",
+    "cur": false,
+    "c": [
+      "Data Mining"
+    ]
+  },
+  {
+    "term": "Spring 2024",
+    "cur": false,
+    "c": [
+      "Data Structures with Algorithms",
+      "Text Analytics and NLP (Graduate)"
+    ]
+  },
+  {
+    "term": "Fall 2023",
+    "cur": false,
+    "c": [
+      "Discrete Mathematics"
+    ]
+  },
+  {
+    "term": "Spring 2023",
+    "cur": false,
+    "c": [
+      "AI Master (Outreach · Woori Bank)",
+      "AI and Machine Learning (Graduate)",
+      "Data Structure and Algorithms"
+    ]
+  },
+  {
+    "term": "Fall 2022",
+    "cur": false,
+    "c": [
+      "Deep Learning (Graduate)",
+      "Discrete Mathematics"
+    ]
+  },
+  {
+    "term": "Spring 2022",
+    "cur": false,
+    "c": [
+      "Data Analytics and Applications",
+      "Data Structure and Algorithms"
+    ]
+  },
+  {
+    "term": "Fall 2021",
+    "cur": false,
+    "c": [
+      "Discrete Mathematics"
+    ]
+  },
+  {
+    "term": "Spring 2021",
+    "cur": false,
+    "c": [
+      "Data Structure and Algorithms"
+    ]
+  }
+]

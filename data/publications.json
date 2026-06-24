@@ -1,0 +1,182 @@
+{
+  "inProgress": [
+    {
+      "a": "S. Lee, I. Cho, E. Kim",
+      "t": "Deep-Learning-Driven Prediction of Phlebitis: Leveraging Large-Scale Cohort Data on Inpatient Peripheral Intravenous Catheter Complications",
+      "v": "BMC Medical Informatics and Decision Making",
+      "s": "rev"
+    },
+    {
+      "a": "Y. Lim, I. Park, S. Lee",
+      "t": "Trustworthy ICU Care: an Uncertainty-Aware Reinforcement Learning Framework for Safer Drug Dosing",
+      "v": "Submitted",
+      "s": "prog"
+    },
+    {
+      "a": "Y. Lim, S. Lee",
+      "t": "Generalizable Repetition Counting via Metric-Based Few-Shot Learning on Wearable Motion Signals",
+      "v": "Submitted",
+      "s": "prog"
+    },
+    {
+      "a": "H. Cho, J. Lee, M. Kim, S. Lee",
+      "t": "Interpretable Multimodal Signal Analysis Framework for Fault Detection in Industrial Compressors",
+      "v": "Submitted",
+      "s": "prog"
+    },
+    {
+      "a": "M. Shin, D. Cho, S. Lee",
+      "t": "A Wearable Multimodal Measurement System for Quantifying Bilateral Asymmetry in Resistance Exercise",
+      "v": "Submitted",
+      "s": "prog"
+    },
+    {
+      "a": "Y. Choi, J. Kang, J. Park, M. Shin, D. Cho, S. Lee",
+      "t": "Biokinetic Data Fusion for Practical 1RM Estimation: A Non-Exhaustive Strength Assessment Model for Sports Medicine",
+      "v": "Submitted",
+      "s": "prog"
+    },
+    {
+      "a": "I. Cho, H. Shin, D. Cho, B. Park, S. Lee",
+      "t": "A Bilingual Multi-Institutional Nursing Notes Dataset and Method for Extracting Fall-Risk Phenotypes",
+      "v": "Submitted",
+      "s": "prog"
+    },
+    {
+      "a": "J. Kang, M. Kim, J. Lee, J. Park, S. Lee",
+      "t": "Towards Generalizable Anomaly Detection: A Concept Drift-Aware Framework for Industrial Robots using Time Series Foundation Models",
+      "v": "Submitted",
+      "s": "prog"
+    }
+  ],
+  "journals": [
+    {
+      "y": "2025",
+      "a": "J. Park, S. Lee*",
+      "t": "MoltiTox: a multimodal fusion model for molecular toxicity prediction",
+      "v": "Frontiers in Toxicology",
+      "d": "https://doi.org/10.3389/ftox.2025.1720651"
+    },
+    {
+      "y": "2025",
+      "a": "Y. Lim, I. Park, S. Lee*",
+      "t": "A Reinforcement Learning Framework for Personalized Anticoagulation Dosing in Critical Care: Integrating Batch-Constrained Policy Optimization and Off-Policy Evaluation",
+      "v": "IEEE Access",
+      "d": "https://doi.org/10.1109/ACCESS.2025.3638417"
+    },
+    {
+      "y": "2025",
+      "a": "Y. Lim, S. Lee*",
+      "t": "OMG-RL: Offline Model-based Guided Reward Learning for Heparin Treatment",
+      "v": "Biomedical Engineering Advances, vol. 10",
+      "d": "https://doi.org/10.1016/j.bea.2025.100198"
+    },
+    {
+      "y": "2024",
+      "a": "S. Lee*, Y. Lim, K. Lim",
+      "t": "Multimodal sensor fusion models for real-time exercise repetition counting with IMU sensors and respiration data",
+      "v": "Information Fusion, vol. 104",
+      "d": "https://doi.org/10.1016/j.inffus.2023.102153"
+    },
+    {
+      "y": "2024",
+      "a": "Y. Choe, S. Lee, Y. Lim, S. Kim*",
+      "t": "Machine learning-derived model for predicting poor post-treatment quality of life in Korean cancer survivors",
+      "v": "Supportive Care in Cancer, vol. 32"
+    },
+    {
+      "y": "2024",
+      "a": "S. Lee, P. Bain, A. Musa, C. Baker, J. Li*",
+      "t": "A Causal Network-Based Markov Decision Process Model for Intervention Planning",
+      "v": "IEEE Transactions on Automation Science and Engineering, vol. 21(1), pp. 706-720"
+    },
+    {
+      "y": "2022",
+      "a": "J. Yun, J. Sim, S. Lee, Y. Yun*",
+      "t": "Stronger association of perceived health with socio-economic inequality during COVID-19 pandemic than pre-pandemic era",
+      "v": "BMC Public Health, vol. 22(1)"
+    },
+    {
+      "y": "2021",
+      "a": "S. Lee, L. Liu, R. Radwin, J. Li*",
+      "t": "Machine Learning in Manufacturing Ergonomics: Recent Advances, Challenges, and Opportunities",
+      "v": "IEEE Robotics and Automation Letters, vol. 6(3), pp. 5745-5752"
+    },
+    {
+      "y": "2021",
+      "a": "S. Lee, P. Bain, A. Musa, C. Baker, J. Li*",
+      "t": "An Integrated Opioid Prescription Optimization Framework for Total Joint Replacement Surgery Patients",
+      "v": "IISE Transactions on Healthcare Systems Engineering, vol. 11(3), pp. 209-223"
+    },
+    {
+      "y": "2021",
+      "a": "Y. Yun*, S. Oh, S. Sim, S. Lee, E. Sohn",
+      "t": "Development and validation of the Health-Friendly Activity Index",
+      "v": "BMJ Open",
+      "d": "https://doi.org/10.1136/bmjopen-2021-048768"
+    },
+    {
+      "y": "2021",
+      "a": "S. Lee, P. Bain, A. Musa, J. Li*",
+      "t": "A Markov chain model for analysis of physician workflow in primary care clinics",
+      "v": "Health Care Management Science, vol. 24, pp. 72-91"
+    },
+    {
+      "y": "2021",
+      "a": "S. Lee, S. Wei, V. White, P. Bain, C. Baker, J. Li*",
+      "t": "Classification of Opioid Usage through Semi-supervised Learning for Total Joint Replacement Patients",
+      "v": "IEEE Journal of Biomedical and Health Informatics, vol. 25(1), pp. 189-200"
+    },
+    {
+      "y": "2020",
+      "a": "Y. Yun*, J. Sim, Y. Kim, S. Lee, K. Kim",
+      "t": "Consumers’ consciousness of health-friendly products and services",
+      "v": "BMJ Open",
+      "d": "https://doi.org/10.1136/bmjopen-2019-035591"
+    },
+    {
+      "y": "2019",
+      "a": "X. Zhong, S. Lee, C. Zhao, et al., J. Li*",
+      "t": "Reducing COPD readmissions through predictive modeling and incentive-based interventions",
+      "v": "Health Care Management Science, vol. 22(1), pp. 121-139"
+    },
+    {
+      "y": "2019",
+      "a": "S. Lee, S. Wang, P. Bain, et al., J. Li*",
+      "t": "Modeling and Analysis of Postdischarge Intervention Process to Reduce COPD Readmissions",
+      "v": "IEEE Transactions on Automation Science and Engineering, vol. 16(1), pp. 21-34"
+    },
+    {
+      "y": "2018",
+      "a": "S. Lee, S. Wang, P. Bain, et al., J. Li*",
+      "t": "Reducing COPD Readmissions: A Causal Bayesian Network Model",
+      "v": "IEEE Robotics and Automation Letters, vol. 3(4), pp. 4046-4053"
+    },
+    {
+      "y": "2018",
+      "a": "Y. Son, S. Lee, S. Park, J. Lee*",
+      "t": "Learning representative exemplars using one-class Gaussian process regression",
+      "v": "Pattern Recognition, vol. 74, pp. 185-197"
+    },
+    {
+      "y": "2014",
+      "a": "S. Lee, B. Koo, K. Jung*",
+      "t": "Comparative Study of Dimension Reduction Methods for Highly Imbalanced Overlapping Churn Data",
+      "v": "Industrial Engineering & Management Systems, vol. 13(4), pp. 454-462"
+    }
+  ],
+  "conferences": [
+    {
+      "y": "2018",
+      "a": "S. Lee, E. Nemati, J. Kuang",
+      "t": "Configurable Pulmonary-Tuned Privacy Preservation Algorithm for Mobile Devices",
+      "v": "IEEE Int. Conf. on Bioinformatics and Biomedicine (BIBM), Madrid, Spain, pp. 1107-1112"
+    },
+    {
+      "y": "2017",
+      "a": "S. Lee, X. Zhong, H. Lee, et al., J. Li",
+      "t": "Incentive-Based Optimal Intervention Policy to Reduce Hospital Readmissions for COPD Patients",
+      "v": "13th Conf. on Automation Science and Engineering (CASE), Xi’an, China"
+    }
+  ]
+}
