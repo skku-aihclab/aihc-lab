@@ -102,6 +102,8 @@ img{max-width:100%;display:block}
 .about-blurb .txt p{font-size:16px;color:var(--charcoal);line-height:1.75;margin-bottom:16px}
 .about-blurb .txt p b{color:var(--ink-deep);font-weight:600}
 .about-visual{background:var(--surface-soft);border-radius:var(--r-feature);padding:44px;text-align:center}
+.about-visual.has-video{padding:0;overflow:hidden;background:#000;line-height:0}
+.about-video{width:100%;height:100%;display:block;object-fit:cover}
 .about-visual .ring{width:120px;height:120px;margin:0 auto 22px;border-radius:50%;background:linear-gradient(140deg,#0d2a52,#0064E0);display:grid;place-items:center;color:#fff;font-family:var(--font-display);font-weight:700;font-size:34px;letter-spacing:-1px}
 .about-visual h4{font-size:20px;font-weight:600}
 .about-visual span{font-size:14px;color:var(--slate);display:block;margin-top:6px}
@@ -156,8 +158,8 @@ img{max-width:100%;display:block}
 .people-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .person-card{background:var(--canvas);border:1px solid var(--hairline-soft);border-radius:var(--r-xl);padding:26px;transition:.2s ease}
 .person-card:hover{box-shadow:var(--sh-card);transform:translateY(-3px)}
-.p-avatar{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--font-display);font-weight:600;font-size:22px;letter-spacing:-1px;margin-bottom:18px;position:relative;overflow:hidden}
-.p-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.p-avatar{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--font-display);font-weight:600;font-size:32px;letter-spacing:-1px;margin-bottom:18px;position:relative;overflow:hidden}
+.p-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
 .person-card h4{font-size:18px;font-weight:600;letter-spacing:-0.3px}
 .person-card .en{font-size:14px;color:var(--steel);margin-top:2px;font-weight:500}
 .tag-line{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
@@ -471,10 +473,8 @@ img{max-width:100%;display:block}
           <p>인과 추론·설명가능 AI·강화학습·멀티모달 파운데이션 모델을 토대로, 환자 결과 예측과 개입 계획, 웨어러블 신호 분석, 임상 자원 최적화까지 <b>실제 임상 현장에 닿는 연구</b>를 지향합니다.</p>
           <button class="btn btn-primary" data-go="about" style="margin-top:12px">Read More</button>
         </div>
-        <div class="about-visual reveal">
-          <div class="ring">AIHC</div>
-          <h4>AI-Healthcare Lab</h4>
-          <span>Est. 2024 · Prof. Sujee Lee</span>
+        <div class="about-visual has-video reveal">
+          <video class="about-video" src="KakaoTalk_Video_2026-06-24-17-58-14.mp4" autoplay loop muted playsinline></video>
         </div>
       </div>
     </div>
