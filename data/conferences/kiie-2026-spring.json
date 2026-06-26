@@ -11,8 +11,8 @@
     { "p": "AIHC Lab 구성원들은 2026년 6월 4일부터 5일까지 경주화백컨벤션센터에서 개최된 2026 대한산업공학회 춘계공동학술대회에 참가했습니다." },
     { "p": "이번 학술대회에서는 산업공학 분야의 다양한 연구 동향과 함께, 인공지능, 데이터 분석, 최적화, 헬스케어 및 바이오 응용 연구 등 여러 주제를 폭넓게 살펴볼 수 있었습니다. AIHC Lab 구성원들은 다양한 발표와 세션에 참석하며 관련 연구자들과 교류하고, 연구실에서 진행 중인 연구의 확장 가능성을 모색하는 시간을 가졌습니다." },
     { "p": "특히 이번 학술대회에서는 AIHC Lab 구성원들의 연구 발표도 함께 이루어졌습니다. 신민영, 최유정, 강지원, 조다윗 연구원이 구두 발표를 진행했으며, 박호진 연구원이 포스터 발표를 통해 연구 성과를 공유했습니다." },
-    { "p": "<b>📢 구두 발표</b><br><br><b>신민영</b><br>Optimizing Cost-Aware Measurement Scheduling for Sedated ICH Patients via Patient Digital Twins<br><i>Minyoung Shin, Sujee Lee</i><br><br><b>최유정</b><br>재활 적용을 고려한 웨어러블 AI 기반 비최대 근력 평가 프레임워크: 다중 모달 Biokinetic 융합을 통한 Submaximal 저항 운동에서의 1RM 추정<br><i>최유정, 강지원, 이수지</i><br><br><b>강지원</b><br>이기종 산업용 로봇 파라미터를 위한 시계열 파운데이션 모델을 향하여<br><i>강지원, 이수지</i><br><br><b>조다윗</b><br>생물의학 문헌으로부터 Synthetic Lethality(합성치사)를 추출하기 위한 LLM 기반 프레임워크<br><i>조다윗, 신민영, 이수지</i>" },
-    { "p": "<b>🖼 포스터 발표</b><br><br><b>박호진</b><br>포스터 발표를 통해 연구 성과를 공유했습니다." },
+    { "p": "<b>구두 발표</b><br><br><b>신민영</b><br>Optimizing Cost-Aware Measurement Scheduling for Sedated ICH Patients via Patient Digital Twins<br><i>Minyoung Shin, Sujee Lee</i><br><br><b>최유정</b><br>재활 적용을 고려한 웨어러블 AI 기반 비최대 근력 평가 프레임워크: 다중 모달 Biokinetic 융합을 통한 Submaximal 저항 운동에서의 1RM 추정<br><i>최유정, 강지원, 이수지</i><br><br><b>강지원</b><br>이기종 산업용 로봇 파라미터를 위한 시계열 파운데이션 모델을 향하여<br><i>강지원, 이수지</i><br><br><b>조다윗</b><br>생물의학 문헌으로부터 Synthetic Lethality(합성치사)를 추출하기 위한 LLM 기반 프레임워크<br><i>조다윗, 신민영, 이수지</i>" },
+    { "p": "<b>포스터 발표</b><br><br><b>박호진</b><br>포스터 발표를 통해 연구 성과를 공유했습니다." },
     { "p": "이번 학회 참가를 통해 AIHC Lab은 환자 디지털 트윈 기반 측정 스케줄링, 웨어러블 AI 기반 근력 평가, 산업용 로봇 시계열 모델링, 생물의학 문헌 기반 LLM 프레임워크 등 다양한 연구 성과를 공유했습니다. 앞으로도 AIHC Lab은 인공지능과 데이터 기반 방법론을 바탕으로 헬스케어, 바이오, 산업 시스템 등 다양한 분야로 연구를 확장해 나가겠습니다." }
   ]
 }
