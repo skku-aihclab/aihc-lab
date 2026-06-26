@@ -1,0 +1,59 @@
+name: Optimize images
+
+# images/ 에 사진이 푸시되면 자동으로 리사이즈(최대 1600px) + 압축합니다.
+# 학생들은 큰 원본 사진을 그냥 올리면 되고, 이 워크플로가 자동으로 줄여줍니다.
+# (GITHUB_TOKEN 으로 되돌려 커밋하므로 무한 루프는 발생하지 않습니다.)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'images/**'
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y imagemagick pngquant
+
+      - name: Optimize changed images
+        run: |
+          base="${{ github.event.before }}"
+          if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "${base}^{commit}" 2>/dev/null; then
+            files=$(git ls-files 'images/**')
+          else
+            files=$(git diff --name-only --diff-filter=ACM "$base" "${{ github.sha }}" -- 'images/**')
+          fi
+          [ -z "$files" ] && { echo "변경된 이미지 없음"; exit 0; }
+          echo "$files" | while IFS= read -r f; do
+            [ -f "$f" ] || continue
+            low=$(echo "$f" | tr 'A-Z' 'a-z')
+            case "$low" in
+              *.jpg|*.jpeg)
+                mogrify -resize '1600x1600>' -sampling-factor 4:2:0 -strip -interlace JPEG -quality 82 "$f" ;;
+              *.png)
+                mogrify -resize '1600x1600>' -strip "$f"
+                pngquant --force --skip-if-larger --quality=65-90 --strip --output "$f" "$f" || true ;;
+            esac
+            echo "optimized: $f"
+          done
+
+      - name: Commit optimized images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "최적화로 바뀐 파일 없음"
+          else
+            git commit -m "chore: 이미지 자동 최적화 [skip ci]"
+            git push
+          fi
