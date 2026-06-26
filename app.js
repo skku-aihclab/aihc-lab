@@ -291,7 +291,7 @@ function animateCount(el) {
 
 /* ---------------- INIT: load data/*.json then render ---------------- */
 async function init() {
-  const j = f => fetch('data/' + f).then(r => { if (!r.ok) throw new Error('불러오기 실패: ' + f); return r.json(); });
+  const j = f => fetch('data/' + f, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error('불러오기 실패: ' + f); return r.json(); });
   /* 폴더형 컬렉션 로더: data/<dir>/_index.json 의 글 목록을 읽어 각 글 파일을 불러옵니다.
      글 추가는 data/<dir>/ 에 <id>.json 을 만들고 _index.json 목록에 id 한 줄을 더하면 됩니다. */
   const coll = async dir => {
