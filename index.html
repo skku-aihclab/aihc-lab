@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="styles.css?v=3">
+<link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
 
@@ -57,8 +57,11 @@
       <div class="nav-group">
         <button class="pill" data-page="activity" data-go="activity">Activity <i class="caret"></i></button>
         <div class="dropdown">
+          <a data-go="activity" data-scroll="ac-notice">Notice</a>
           <a data-go="activity" data-scroll="ac-news">News</a>
-          <a data-go="activity" data-scroll="ac-seminar">Seminar</a>
+          <a data-go="activity" data-scroll="ac-conf">Conferences</a>
+          <a data-go="activity" data-scroll="ac-letter">Newsletter</a>
+          <a data-go="activity" data-scroll="ac-study">Study</a>
           <a data-go="activity" data-scroll="ac-album">Album</a>
         </div>
       </div>
@@ -77,7 +80,7 @@
     <div class="dgroup"><button class="dtoggle">Members <span>+</span></button><div class="dsub"><a data-go="members" data-scroll="m-professor">Professor</a><a data-go="members" data-scroll="m-students">Students</a><a data-go="members" data-scroll="m-alumni">Alumni</a></div></div>
     <div class="dgroup"><button class="dtoggle">Research <span>+</span></button><div class="dsub"><a data-go="research" data-scroll="r-areas">Research Areas</a><a data-go="research" data-scroll="r-projects">Projects</a><a data-go="research" data-scroll="r-courses">Courses</a></div></div>
     <div class="dgroup"><button class="dtoggle">Publications <span>+</span></button><div class="dsub"><a data-go="publications" data-tab="all">All Papers</a><a data-go="publications" data-tab="journal">International Journals</a><a data-go="publications" data-tab="conf">Conferences</a><a data-go="publications" data-tab="prog">In Progress</a></div></div>
-    <div class="dgroup"><button class="dtoggle">Activity <span>+</span></button><div class="dsub"><a data-go="activity" data-scroll="ac-news">News</a><a data-go="activity" data-scroll="ac-seminar">Seminar</a><a data-go="activity" data-scroll="ac-album">Album</a></div></div>
+    <div class="dgroup"><button class="dtoggle">Activity <span>+</span></button><div class="dsub"><a data-go="activity" data-scroll="ac-notice">Notice</a><a data-go="activity" data-scroll="ac-news">News</a><a data-go="activity" data-scroll="ac-conf">Conferences</a><a data-go="activity" data-scroll="ac-letter">Newsletter</a><a data-go="activity" data-scroll="ac-study">Study</a><a data-go="activity" data-scroll="ac-album">Album</a></div></div>
   </div>
 </div>
 
@@ -141,7 +144,7 @@
     <div class="section tight">
       <div class="section-bar reveal">
         <h2>Lab News</h2>
-        <span class="more" data-go="activity" data-scroll="ac-news">More news →</span>
+        <span class="more" data-go="activity" data-scroll="ac-conf">More activity →</span>
       </div>
       <div class="news-list" id="latestNews"></div>
     </div>
@@ -336,27 +339,40 @@
 <!-- ============ ACTIVITY ============ -->
 <section class="page" id="activity">
   <div class="wrap section">
-    <div class="sub-headrow reveal anchor" id="ac-news" style="margin:0 0 24px">
-      <div class="section-head" style="margin:0">
-        <div class="eyebrow">Activity</div>
-        <h2>News</h2>
-      </div>
-      <div class="cnav">
-        <button class="cbtn" data-track="newsTrack" data-dir="-1" aria-label="이전">‹</button>
-        <button class="cbtn" data-track="newsTrack" data-dir="1" aria-label="다음">›</button>
-      </div>
-    </div>
-    <div class="carousel reveal"><div class="ctrack" id="newsTrack"></div></div>
 
-    <div class="sub-headrow anchor" id="ac-seminar">
-      <h3 class="sub-head">Seminar</h3>
-      <div class="cnav">
-        <button class="cbtn" data-track="seminarTrack" data-dir="-1" aria-label="이전">‹</button>
-        <button class="cbtn" data-track="seminarTrack" data-dir="1" aria-label="다음">›</button>
-      </div>
+    <!-- Notice -->
+    <div class="section-head reveal anchor" id="ac-notice" style="margin:0 0 24px">
+      <div class="eyebrow">Activity</div>
+      <h2>Notice</h2>
+      <p>연구실 공지 · 모집 · 내부 대회 안내입니다.</p>
     </div>
-    <div class="carousel reveal"><div class="ctrack" id="seminarTrack"></div></div>
+    <div class="notice-board reveal" id="noticeBoard"></div>
 
+    <!-- News -->
+    <div class="sub-headrow anchor" id="ac-news">
+      <h3 class="sub-head">News <span class="sub-note">연구실 소식 · 행사 · 수상</span></h3>
+    </div>
+    <div class="conf-grid reveal" id="newsGrid"></div>
+
+    <!-- Conferences -->
+    <div class="sub-headrow anchor" id="ac-conf">
+      <h3 class="sub-head">Conferences <span class="sub-note">학회 발자취</span></h3>
+    </div>
+    <div class="conf-grid reveal" id="confGrid"></div>
+
+    <!-- Newsletter -->
+    <div class="sub-headrow anchor" id="ac-letter">
+      <h3 class="sub-head">Newsletter <span class="sub-note">학생 후기 · 블로그</span></h3>
+    </div>
+    <div class="post-grid reveal" id="postGrid"></div>
+
+    <!-- Study -->
+    <div class="sub-headrow anchor" id="ac-study">
+      <h3 class="sub-head">Study <span class="sub-note">학부생 스터디 기록</span></h3>
+    </div>
+    <div class="notice-board reveal" id="studyBoard"></div>
+
+    <!-- Album -->
     <div class="sub-headrow anchor" id="ac-album">
       <h3 class="sub-head">Album</h3>
       <div class="cnav">
@@ -368,24 +384,17 @@
   </div>
 </section>
 
-<!-- ============ NEWS DETAIL ============ -->
-<section class="page" id="news-detail">
+<!-- ============ ARTICLE DETAIL (shared by all activity types) ============ -->
+<section class="page" id="article-detail">
   <div class="wrap section">
-    <article class="article" id="newsArticle"></article>
+    <article class="article" id="articleMount"></article>
   </div>
 </section>
 
-<!-- ============ SEMINAR DETAIL ============ -->
-<section class="page" id="seminar-detail">
+<!-- ============ MEMBER DETAIL ============ -->
+<section class="page" id="member-detail">
   <div class="wrap section">
-    <article class="article" id="seminarArticle"></article>
-  </div>
-</section>
-
-<!-- ============ ALBUM DETAIL ============ -->
-<section class="page" id="album-detail">
-  <div class="wrap section">
-    <article class="article" id="albumArticle"></article>
+    <article class="article" id="memberMount"></article>
   </div>
 </section>
 
@@ -429,6 +438,6 @@
   </div>
 </footer>
 
-<script src="app.js?v=2"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>

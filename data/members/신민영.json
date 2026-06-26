@@ -1,0 +1,22 @@
+{
+  "id": "신민영",
+  "group": "masters",
+  "ko": "신민영",
+  "en": "Shin, Minyoung",
+  "init": "MS",
+  "img": "신민영.png",
+  "degree": "석사과정",
+  "year": "2025",
+  "email": "ericashin1@g.skku.edu",
+  "education": [
+    "B.S in Statistics, Sungkyunkwan University (2025)",
+    "M.S in Industrial Engineering, Sungkyunkwan University..."
+  ],
+  "ri": [
+    "Healthcare",
+    "Multimodal Foundation Models",
+    "Offline RL for Clinical Decision-Making"
+  ],
+  "bio": "",
+  "blocks": []
+}

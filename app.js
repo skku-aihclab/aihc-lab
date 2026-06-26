@@ -1,10 +1,11 @@
 /* ===================================================================
    AI-Healthcare Lab — app.js
-   콘텐츠(멤버·프로젝트·논문·뉴스 등)는 data/ 폴더의 JSON 파일에서 불러옵니다.
+   콘텐츠(멤버·프로젝트·논문·공지·학회 등)는 data/ 폴더의 JSON 파일에서 불러옵니다.
    내용을 바꾸려면 이 파일이 아니라 data/*.json 을 편집하세요.
    =================================================================== */
 
 const $ = id => document.getElementById(id);
+const enc = s => encodeURIComponent(s);
 
 const palette = [
   'linear-gradient(140deg,#0d2a52,#0064E0)',
@@ -13,64 +14,186 @@ const palette = [
   'linear-gradient(140deg,#063a36,#0e7c70)'
 ];
 
-/* 데이터 보관 (data/*.json 로드 후 채워짐) — open* 함수들이 참조 */
-let news = [], seminars = [], albums = [];
+/* 데이터 보관 (data 폴더의 JSON 로드 후 채워짐) — open/render 함수들이 참조 */
+let notices = [], news = [], conferences = [], posts = [], studies = [], albums = [];
+
+/* 날짜 포맷: "2026-06-26" → "2026.06.26". 날짜 형식이 아니면(예: "상시") 그대로 표시 */
+function fmtDate(s) {
+  if (!s) return '';
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s).trim());
+  return m ? `${m[1]}.${m[2]}.${m[3]}` : s;
+}
 
 /* ---------- People ---------- */
-const pc = (p, i) => `<div class="person-card reveal"><div class="p-avatar" style="background:${palette[i % palette.length]}">${p.img ? `<img src="images/members/${encodeURIComponent(p.img)}" alt="${p.en}" onerror="this.remove()">` : ''}${p.init}</div><h4>${p.ko}</h4><div class="en">${p.en}</div><div class="tag-line">${p.ri.map(t => `<span class="mini-tag">${t}</span>`).join('')}</div></div>`;
+const memberMap = {};
+const GROUP_LABEL = { masters: 'Master Student', undergraduate: 'Undergraduate Student', parttime: 'Part-time Master Student', alumni: 'Alumni' };
+const GROUP_GRID = { masters: 'masterGrid', undergraduate: 'ugGrid', parttime: 'ptGrid', alumni: 'alumniGrid' };
+/* 멤버 파일(data/members/*.json)들을 group 필드 기준으로 분류해 카드 렌더 + 상세용 lookup 등록 */
+function setupMembers(arr) {
+  const buckets = {};
+  arr.forEach((m, i) => {
+    m._group = GROUP_LABEL[m.group] || '';
+    m._bg = palette[i % palette.length];
+    memberMap[m.id] = m;
+    (buckets[m.group] || (buckets[m.group] = [])).push(m);
+  });
+  Object.keys(GROUP_GRID).forEach(g => {
+    const el = $(GROUP_GRID[g]);
+    if (el) el.innerHTML = (buckets[g] || []).map(pc).join('');
+  });
+}
+const pc = p => `<div class="person-card reveal" data-open="member:${p.id}"><div class="p-avatar" style="background:${p._bg}">${p.img ? `<img src="images/members/${enc(p.img)}" alt="${p.en || p.ko}" onerror="this.remove()">` : ''}${p.init}</div><h4>${p.ko}</h4><div class="en">${p.en || p.degree || ''}</div><div class="tag-line">${(p.ri || []).filter(Boolean).map(t => `<span class="mini-tag">${t}</span>`).join('')}</div></div>`;
 
-/* ---------- Carousels (News / Seminar / Album) ---------- */
+/* ---------- Member 상세 페이지 (블로그형 — blocks 로 사진·긴 글 작성 가능) ---------- */
+function openMember(id) {
+  const m = memberMap[id]; if (!m) return;
+  const avatar = `<div class="md-avatar" style="background:${m._bg}">${m.img ? `<img src="images/members/${enc(m.img)}" alt="${m.en || m.ko}" onerror="this.remove()">` : ''}${m.init || ''}</div>`;
+  const tags = (m.ri || []).filter(Boolean).map(t => `<span class="mini-tag">${t}</span>`).join('');
+  const rows = [];
+  if (m.degree) rows.push(`<div class="md-row"><span class="md-k">지위</span><span class="md-v plain">${m.degree}</span></div>`);
+  if (m.year) rows.push(`<div class="md-row"><span class="md-k">입학</span><span class="md-v plain">${m.year}</span></div>`);
+  if (m.email) rows.push(`<div class="md-row"><span class="md-k">E-mail</span><a class="md-v" href="mailto:${m.email}">${m.email}</a></div>`);
+  const edu = (m.education && m.education.length) ? `<div class="md-sec"><h3>Education</h3><ul class="md-edu">${m.education.map(e => `<li>${e}</li>`).join('')}</ul></div>` : '';
+  const lead = m.bio ? `<p class="md-lead">${m.bio}</p>` : '';
+  const body = (m.blocks || []).map(b => {
+    if (b.p) return `<p>${b.p}</p>`;
+    if (b.img) return `<figure><div class="imgbox"><img src="images/members/${enc(b.img)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div><figcaption>${b.cap || ''}</figcaption></figure>`;
+    return '';
+  }).join('');
+  const story = (lead || body) ? `<div class="md-bio">${lead}${body}</div>` : '';
+  $('memberMount').innerHTML = `
+    <div class="crumb"><a data-go="members" data-scroll="m-students">Members</a> › <span>${m.ko}</span></div>
+    <div class="md-head">
+      ${avatar}
+      <div class="md-info">
+        <div class="md-group">${m._group}</div>
+        <h1>${m.ko}</h1>
+        ${m.en ? `<div class="md-en">${m.en}</div>` : ''}
+        ${tags ? `<div class="tag-line md-tags">${tags}</div>` : ''}
+        ${rows.join('')}
+      </div>
+    </div>
+    ${edu}
+    ${story}
+    <button class="back-btn" data-go="members" data-scroll="m-students">← Members 목록으로</button>`;
+  go('member-detail');
+}
+
+/* ---------- 공용 상세 기사 (Notice / Conference / Newsletter / Study / Album 공유) ---------- */
+const SECTIONS = {
+  notice:     { list: () => notices,     folder: 'notice',      label: 'Notice',      anchor: 'ac-notice' },
+  news:       { list: () => news,        folder: 'news',        label: 'News',        anchor: 'ac-news' },
+  conference: { list: () => conferences, folder: 'conferences', label: 'Conferences', anchor: 'ac-conf' },
+  post:       { list: () => posts,       folder: 'posts',       label: 'Newsletter',  anchor: 'ac-letter' },
+  study:      { list: () => studies,     folder: 'study',       label: 'Study',       anchor: 'ac-study' },
+  album:      { list: () => albums,      folder: 'album',       label: 'Album',       anchor: 'ac-album' }
+};
+
+function articleMeta(type, n) {
+  const m = [];
+  if (n.tag) m.push(`<span class="badge">${n.tag}</span>`);
+  if (n.posted) m.push(`<span class="adate">게시일 ${fmtDate(n.posted)}</span>`);
+  if (type === 'conference' && n.date) m.push(`<span class="adate">${n.date}</span>`);
+  if (type === 'notice' && n.deadline) m.push(`<span class="adate">마감 ${fmtDate(n.deadline)}</span>`);
+  if (type === 'post' && n.author) m.push(`<span class="adate">${n.author}${n.conf ? ' · ' + n.conf : ''}</span>`);
+  if (type === 'study') {
+    if (n.topic) m.push(`<span class="adate">${n.topic}</span>`);
+    if (n.members) m.push(`<span class="adate">${n.members}</span>`);
+  }
+  return m.join('');
+}
+
+function openArticle(type, id) {
+  const sec = SECTIONS[type]; if (!sec) return;
+  const n = sec.list().find(x => x.id === id); if (!n) return;
+  const f = sec.folder;
+  const body = (n.blocks || []).map(b => {
+    if (b.p) return `<p>${b.p}</p>`;
+    if (b.img) return `<figure><div class="imgbox"><img src="images/${f}/${enc(b.img)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div><figcaption>${b.cap || ''}</figcaption></figure>`;
+    return '';
+  }).join('');
+  const hero = n.hero ? `<div class="imgbox"><img src="images/${f}/${enc(n.hero)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>` : '';
+  const ext = n.link && !n.link.startsWith('mailto:');
+  const link = n.link ? `<p style="margin-top:28px"><a class="btn btn-cobalt" href="${n.link}"${ext ? ' target="_blank" rel="noopener"' : ''}>${n.linkText || '바로가기 →'}</a></p>` : '';
+  $('articleMount').innerHTML = `
+    <div class="crumb"><a data-go="activity" data-scroll="${sec.anchor}">Activity</a> › <a data-go="activity" data-scroll="${sec.anchor}">${sec.label}</a> › <span>${n.title}</span></div>
+    <h1>${n.title}</h1>
+    <div class="ameta">${articleMeta(type, n)}</div>
+    ${hero}
+    ${body}
+    ${link}
+    <button class="back-btn" data-go="activity" data-scroll="${sec.anchor}">← ${sec.label} 목록으로</button>`;
+  go('article-detail');
+}
+
+/* ---------- 게시판형 리스트 (Notice / Study 공유) ---------- */
+function renderBoard(mountId, items, type) {
+  const sorted = [...items].sort((a, b) =>
+    (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || String(b.posted || '').localeCompare(String(a.posted || '')));
+  $(mountId).innerHTML = sorted.map(it => `<div class="nb-row reveal" data-open="${type}:${it.id}">
+    <div class="nb-main">
+      ${it.pinned ? '<span class="pin">📌 고정</span>' : ''}
+      ${it.tag ? `<span class="nb-tag">${it.tag}</span>` : ''}
+      <span class="nb-title">${it.title}</span>
+    </div>
+    <div class="nb-meta">
+      ${it.deadline ? `<span class="nb-deadline">마감 ${fmtDate(it.deadline)}</span>` : ''}
+      <span class="nb-date">${fmtDate(it.posted)}</span>
+    </div>
+  </div>`).join('') || '<div class="nb-empty">아직 등록된 글이 없습니다.</div>';
+}
+
+/* ---------- 학회 카드 그리드 ---------- */
 function cardThumb(folder, hero) {
   const icon = '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.8"/><path d="M21 15l-5-5L5 21"/></svg>';
-  if (hero) return `<div class="cthumb"><img src="images/${folder}/${encodeURIComponent(hero)}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='${icon.replace(/'/g, "&#39;")}'"></div>`;
+  if (hero) return `<div class="cthumb"><img src="images/${folder}/${enc(hero)}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='${icon.replace(/'/g, "&#39;")}'"></div>`;
   return `<div class="cthumb">${icon}</div>`;
 }
-function renderCarousel(trackId, items, folder, attr) {
-  $(trackId).innerHTML = items.map(it => `<div class="ccard" ${attr}="${it.id}">
+function renderCardGrid(mountId, items, type, folder) {
+  const sorted = [...items].sort((a, b) => String(b.posted || '').localeCompare(String(a.posted || '')));
+  $(mountId).innerHTML = sorted.map(c => `<div class="conf-card reveal" data-open="${type}:${c.id}">
+    ${cardThumb(folder, c.hero)}
+    <div class="conf-body">
+      <div class="conf-term">${c.term || fmtDate(c.posted)}</div>
+      <h4>${c.title}</h4>
+      <div class="conf-foot"><span class="ctag">${c.tag || ''}</span><span class="nb-date">${fmtDate(c.posted)}</span></div>
+    </div>
+  </div>`).join('') || '<div class="nb-empty">아직 등록된 글이 없습니다.</div>';
+}
+
+/* ---------- 뉴스레터(블로그) 카드 ---------- */
+function renderPostGrid() {
+  const sorted = [...posts].sort((a, b) => String(b.posted || '').localeCompare(String(a.posted || '')));
+  $('postGrid').innerHTML = sorted.map(p => `<div class="post-card reveal" data-open="post:${p.id}">
+    <div class="post-top">
+      <div class="post-avatar">${p.authorImg ? `<img src="images/members/${enc(p.authorImg)}" alt="${p.author || ''}" onerror="this.remove()">` : (p.author ? p.author[0] : '')}</div>
+      <div class="post-by"><div class="post-author">${p.author || ''}</div><div class="post-sub">${fmtDate(p.posted)}${p.conf ? ' · ' + p.conf : ''}</div></div>
+    </div>
+    <h4 class="post-title">${p.title}</h4>
+    <p class="post-excerpt">${p.excerpt || ''}</p>
+    <span class="post-tag">${p.tag || '후기'}</span>
+  </div>`).join('') || '<div class="nb-empty">아직 등록된 글이 없습니다.</div>';
+}
+
+/* ---------- 캐러셀 (Album) ---------- */
+function renderCarousel(trackId, items, type, folder) {
+  $(trackId).innerHTML = items.map(it => `<div class="ccard" data-open="${type}:${it.id}">
     ${cardThumb(folder, it.hero)}
-    <div class="cbody"><div class="cdate">${it.term}</div><h4>${it.title}</h4><span class="ctag">${it.tag}</span></div>
+    <div class="cbody"><div class="cdate">${it.term || fmtDate(it.posted)}</div><h4>${it.title}</h4><span class="ctag">${it.tag}</span></div>
   </div>`).join('');
 }
 
-/* ---------- News article ---------- */
-const newsById = id => news.find(n => n.id === id);
-function openNews(id) {
-  const n = newsById(id); if (!n) return;
-  const body = n.blocks.map(b => {
-    if (b.p) return `<p>${b.p}</p>`;
-    if (b.img) return `<figure><div class="imgbox"><img src="images/news/${encodeURIComponent(b.img)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div><figcaption>${b.cap || ''}</figcaption></figure>`;
-    return '';
-  }).join('');
-  $('newsArticle').innerHTML = `
-    <div class="crumb"><a data-go="activity" data-scroll="ac-news">Activity</a> › <a data-go="activity" data-scroll="ac-news">News</a> › <span>${n.title}</span></div>
-    <h1>${n.title}</h1>
-    <div class="ameta"><span class="badge">${n.tag}</span><span class="adate">${n.date}</span></div>
-    <div class="imgbox"><img src="images/news/${encodeURIComponent(n.hero)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>
-    ${body}
-    <button class="back-btn" data-go="activity" data-scroll="ac-news">← News 목록으로</button>`;
-  go('news-detail');
+/* ---------- 홈 'Lab News' — 공지/학회/뉴스레터 최신 묶음 ---------- */
+function renderLatest() {
+  const merged = [
+    ...notices.filter(n => !n.pinned).map(n => ({ n, t: 'notice' })),
+    ...news.map(n => ({ n, t: 'news' })),
+    ...conferences.map(n => ({ n, t: 'conference' })),
+    ...posts.map(n => ({ n, t: 'post' }))
+  ].sort((a, b) => String(b.n.posted || '').localeCompare(String(a.n.posted || ''))).slice(0, 5);
+  $('latestNews').innerHTML = merged.map(({ n, t }) =>
+    `<div class="news-row reveal" data-open="${t}:${n.id}"><span class="nt"><span class="rtag">${n.tag || ''}</span>${n.title}</span><span class="nd">${fmtDate(n.posted)}</span></div>`).join('');
 }
-
-/* ---------- Seminar / Album article (shared) ---------- */
-function openDetail(list, id, folder, mountId, pageId, backScroll, crumbLabel) {
-  const n = list.find(x => x.id === id); if (!n) return;
-  const body = n.blocks.map(b => {
-    if (b.p) return `<p>${b.p}</p>`;
-    if (b.img) return `<figure><div class="imgbox"><img src="images/${folder}/${encodeURIComponent(b.img)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div><figcaption>${b.cap || ''}</figcaption></figure>`;
-    return '';
-  }).join('');
-  const heroImg = n.hero ? `<div class="imgbox"><img src="images/${folder}/${encodeURIComponent(n.hero)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>` : '';
-  $(mountId).innerHTML = `
-    <div class="crumb"><a data-go="activity" data-scroll="${backScroll}">Activity</a> › <a data-go="activity" data-scroll="${backScroll}">${crumbLabel}</a> › <span>${n.title}</span></div>
-    <h1>${n.title}</h1>
-    <div class="ameta"><span class="badge">${n.tag}</span><span class="adate">${n.date}</span></div>
-    ${heroImg}
-    ${body}
-    <button class="back-btn" data-go="activity" data-scroll="${backScroll}">← ${crumbLabel} 목록으로</button>`;
-  go(pageId);
-}
-const openSeminar = id => openDetail(seminars, id, 'seminar', 'seminarArticle', 'seminar-detail', 'ac-seminar', 'Seminar');
-const openAlbum = id => openDetail(albums, id, 'album', 'albumArticle', 'album-detail', 'ac-album', 'Album');
 
 /* ---------- Publications renderers ---------- */
 const progItem = p => { const b = p.s === 'rev' ? '<span class="badge badge-rev">Under Revision</span>' : '<span class="badge badge-prog">Submitted</span>'; return `<div class="pub-item reveal"><div class="pub-year">${b}</div><div class="pub-body"><div class="ptitle">${p.t}</div><div class="pauthors">${p.a}</div><div class="pvenue">${p.v}</div></div></div>`; };
@@ -87,7 +210,7 @@ function setTab(tab) {
 }
 function go(id, scrollTo, tab) {
   pages.forEach(p => p.classList.toggle('active', p.id === id));
-  const pillId = (id === 'news-detail' || id === 'seminar-detail' || id === 'album-detail') ? 'activity' : id;
+  const pillId = (id === 'article-detail') ? 'activity' : (id === 'member-detail') ? 'members' : id;
   pills.forEach(p => p.classList.toggle('active', p.dataset.page === pillId));
   if (id === 'publications' && tab) setTab(tab);
   closeDrawer();
@@ -100,12 +223,8 @@ function go(id, scrollTo, tab) {
 document.addEventListener('click', e => {
   const cb = e.target.closest('[data-track]');
   if (cb) { e.preventDefault(); const tr = $(cb.dataset.track); if (tr) tr.scrollBy({ left: (+cb.dataset.dir) * Math.max(tr.clientWidth * 0.8, 320), behavior: 'smooth' }); return; }
-  const nt = e.target.closest('[data-news]');
-  if (nt) { e.preventDefault(); openNews(nt.dataset.news); return; }
-  const sm = e.target.closest('[data-seminar]');
-  if (sm) { e.preventDefault(); openSeminar(sm.dataset.seminar); return; }
-  const al = e.target.closest('[data-album]');
-  if (al) { e.preventDefault(); openAlbum(al.dataset.album); return; }
+  const op = e.target.closest('[data-open]');
+  if (op) { e.preventDefault(); const s = op.dataset.open; const i = s.indexOf(':'); const type = s.slice(0, i), id = s.slice(i + 1); if (type === 'member') openMember(id); else openArticle(type, id); return; }
   const t = e.target.closest('[data-go]');
   if (t) { e.preventDefault(); go(t.dataset.go, t.dataset.scroll, t.dataset.tab); }
 });
@@ -145,37 +264,44 @@ function animateCount(el) {
 /* ---------------- INIT: load data/*.json then render ---------------- */
 async function init() {
   const j = f => fetch('data/' + f).then(r => { if (!r.ok) throw new Error('불러오기 실패: ' + f); return r.json(); });
-  let members, projects, partners, pubs, courses, seminarsD, albumsD, newsD;
+  /* 폴더형 컬렉션 로더: data/<dir>/_index.json 의 글 목록을 읽어 각 글 파일을 불러옵니다.
+     글 추가는 data/<dir>/ 에 <id>.json 을 만들고 _index.json 목록에 id 한 줄을 더하면 됩니다. */
+  const coll = async dir => {
+    const ids = await j(dir + '/_index.json');
+    return Promise.all(ids.map(id => j(dir + '/' + encodeURIComponent(id) + '.json')));
+  };
+  let members, projects, partners, pubs, courses, noticesD, newsD, confD, postsD, studiesD, albumsD;
   try {
-    [members, projects, newsD, seminarsD, albumsD, partners, pubs, courses] = await Promise.all([
-      j('members.json'), j('projects.json'), j('news.json'), j('seminars.json'),
-      j('albums.json'), j('partners.json'), j('publications.json'), j('courses.json')
+    [members, projects, partners, pubs, courses,
+      noticesD, newsD, confD, postsD, studiesD, albumsD] = await Promise.all([
+      coll('members'), j('projects.json'), j('partners.json'), j('publications.json'), j('courses.json'),
+      coll('notices'), coll('news'), coll('conferences'), coll('posts'), coll('studies'), coll('albums')
     ]);
   } catch (err) {
     console.error(err);
     return;
   }
-  news = newsD; seminars = seminarsD; albums = albumsD;
+  notices = noticesD; news = newsD; conferences = confD; posts = postsD; studies = studiesD; albums = albumsD;
 
   /* People */
-  $('masterGrid').innerHTML = members.masters.map(pc).join('');
-  $('ugGrid').innerHTML = members.undergraduate.map(pc).join('');
-  $('ptGrid').innerHTML = members.parttime.map(pc).join('');
-  $('alumniGrid').innerHTML = members.alumni.map(pc).join('');
+  setupMembers(members);
 
   /* Projects */
-  const projLogo = (pr, cls) => pr.icon ? `<img class="proj-logo${cls}" src="images/partners/${encodeURIComponent(pr.icon)}" alt="${pr.f}" onerror="this.remove()">` : '';
+  const projLogo = (pr, cls) => pr.icon ? `<img class="proj-logo${cls}" src="images/partners/${enc(pr.icon)}" alt="${pr.f}" onerror="this.remove()">` : '';
   $('projList').innerHTML = projects.map(pr => `<div class="proj-card reveal"><div class="proj-main">${projLogo(pr, '')}<div><div class="pt">${pr.t}</div><div class="pf">${pr.f}</div></div></div><div class="proj-period">${pr.p}</div></div>`).join('');
   $('latestProj').innerHTML = projects.slice(0, 3).map(pr => `<div class="lp-card reveal" data-go="research" data-scroll="r-projects"><div class="cat">${pr.cat}</div><h4>${pr.t}</h4><div class="lp-funder">${projLogo(pr, ' sm')}<span class="pf">${pr.f}</span></div><div class="per">${pr.p}</div></div>`).join('');
 
-  /* News */
-  $('latestNews').innerHTML = news.map(n => `<div class="news-row reveal" data-news="${n.id}"><span class="nt"><span class="rtag">${n.tag}</span>${n.title}</span><span class="nd">${n.term.replace('2025 · ', '')} 2025</span></div>`).join('');
-  renderCarousel('newsTrack', news, 'news', 'data-news');
-  renderCarousel('seminarTrack', seminars, 'seminar', 'data-seminar');
-  renderCarousel('albumTrack', albums, 'album', 'data-album');
+  /* Activity */
+  renderBoard('noticeBoard', notices, 'notice');
+  renderCardGrid('newsGrid', news, 'news', 'news');
+  renderCardGrid('confGrid', conferences, 'conference', 'conferences');
+  renderPostGrid();
+  renderBoard('studyBoard', studies, 'study');
+  renderCarousel('albumTrack', albums, 'album', 'album');
+  renderLatest();
 
   /* Partners */
-  $('partnerRow').innerHTML = partners.map(p => `<div class="partner reveal"><img class="plogo" src="images/partners/${encodeURIComponent(p.img)}" alt="${p.e}"></div>`).join('');
+  $('partnerRow').innerHTML = partners.map(p => `<div class="partner reveal"><img class="plogo" src="images/partners/${enc(p.img)}" alt="${p.e}"></div>`).join('');
 
   /* Publications */
   $('pub-journal').innerHTML = pubs.journals.map(jItem).join('');

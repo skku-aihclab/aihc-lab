@@ -1,0 +1,19 @@
+{
+  "id": "박호진",
+  "group": "undergraduate",
+  "ko": "박호진",
+  "en": "Park, Hojin",
+  "init": "HP",
+  "img": "박호진.png",
+  "degree": "학부연구생",
+  "year": "",
+  "email": "phjpypy@g.skku.edu",
+  "education": [],
+  "ri": [
+    "Healthcare",
+    "Time-Series Modeling",
+    "Domain Adaptation"
+  ],
+  "bio": "",
+  "blocks": []
+}
