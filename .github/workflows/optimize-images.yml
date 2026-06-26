@@ -38,9 +38,9 @@ jobs:
             low=$(echo "$f" | tr 'A-Z' 'a-z')
             case "$low" in
               *.jpg|*.jpeg)
-                mogrify -resize '1600x1600>' -sampling-factor 4:2:0 -strip -interlace JPEG -quality 82 "$f" ;;
+                mogrify -auto-orient -resize '1600x1600>' -sampling-factor 4:2:0 -strip -interlace JPEG -quality 82 "$f" ;;
               *.png)
-                mogrify -resize '1600x1600>' -strip "$f"
+                mogrify -auto-orient -resize '1600x1600>' -strip "$f"
                 pngquant --force --skip-if-larger --quality=65-90 --strip --output "$f" "$f" || true ;;
             esac
             echo "optimized: $f"
