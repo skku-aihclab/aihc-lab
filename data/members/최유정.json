@@ -6,7 +6,6 @@
   "init": "YC",
   "img": "최유정.png",
   "degree": "석사과정",
-  "year": "",
   "email": "chldbwjd929@g.skku.edu",
   "education": [],
   "ri": [
@@ -14,6 +13,5 @@
     "NLP",
     "Few-Shot Learning"
   ],
-  "bio": "",
   "blocks": []
 }

@@ -6,12 +6,10 @@
   "init": "YL",
   "img": "임유석.jpg",
   "degree": "M.S. 졸업",
-  "year": "2024",
   "email": "",
   "education": [],
   "ri": [
     "ICU Heparin Treatment Policies via Offline Reinforcement Learning"
   ],
-  "bio": "",
   "blocks": []
 }

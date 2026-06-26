@@ -6,12 +6,10 @@
   "init": "JK",
   "img": "강지원.png",
   "degree": "석사과정",
-  "year": "",
   "email": "skkujiwon@g.skku.edu",
   "education": [],
   "ri": [
     "Foundation Models for Timeseries"
   ],
-  "bio": "",
   "blocks": []
 }

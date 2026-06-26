@@ -30,8 +30,7 @@
 │   ├── news/               # 연구실 소식 (행사·수상·학위심사)
 │   ├── conferences/        # 학회 참가
 │   ├── posts/              # 뉴스레터 (학생 후기/블로그)
-│   ├── studies/            # 학부생 스터디 기록
-│   └── albums/             # 앨범
+│   └── studies/            # 학부생 스터디 기록
 └── images/                 # ★ 사진은 여기에 올립니다 ★
     ├── members/            # 멤버·교수 사진
     ├── partners/           # 협력기관 / 프로젝트 지원기관 로고
@@ -63,11 +62,9 @@
   "init": "GH",
   "img": "홍길동.png",
   "degree": "석사과정",
-  "year": "2025",
   "email": "gildong@g.skku.edu",
-  "education": ["B.S. 통계학, 성균관대학교 (2025)"],
+  "education": ["B.S. 통계학, 성균관대학교 (2025)", "M.S. 산업공학, 성균관대학교 (2025 – Present)"],
   "ri": ["Healthcare", "NLP"],
-  "bio": "한 줄 소개 (이름 아래 크게 표시)",
   "blocks": [ { "p": "프로필 상세 페이지에 블로그처럼 길게 쓰는 본문입니다." } ]
 }
 ```
@@ -76,11 +73,9 @@
 **카드(목록)에 보이는 것:** `ko` 한글 이름 · `en` 영문 이름 · `ri` 연구 관심사 태그 · `img` 사진(`init` 은 사진 없을 때 표시되는 이니셜)
 
 **카드를 클릭하면 나오는 상세 페이지**에 아래가 추가로 표시됩니다 (비워 두면 그 줄은 숨겨짐):
-- `degree` 지위 — 예: `"석사과정"`, `"박사과정"`, `"학부연구생"`
-- `year` 입학년도 — 예: `"2025"`
+- `degree` 지위 — 예: `"석사과정"`, `"박사과정"`
 - `email` 이메일 주소
-- `education` 학력 — 여러 줄 가능: `["B.S. ...", "M.S. ..."]`
-- `bio` **한 줄 소개** — 이름 바로 아래 크게 나오는 요약 문장
+- `education` 학력 — 여러 줄 가능. **입학·졸업 연도는 여기에 적습니다**: `["B.S. ... (2025)", "M.S. ... (2025 – Present)"]`
 - `blocks` **자기소개 본문** — 블로그처럼 길게 작성. `{ "p": "문단" }`(글) / `{ "img": "사진.png", "cap": "설명" }`(사진)을 순서대로. 본문 사진은 `images/members/` 에 올립니다.
 
 - `img`/사진: 적은 파일명과 **똑같은 이름**의 사진을 `images/members/` 에 올리면 자동 표시됩니다. 사진이 없으면 `img` 를 `""` 로 두면 이니셜이 보입니다.
@@ -99,7 +94,7 @@
 - `inProgress` (진행중): `{ "a": "저자", "t": "제목", "v": "Submitted", "s": "prog" }` — `s` 는 `"prog"`(제출) 또는 `"rev"`(수정중)
 
 ### Activity (공지·소식·학회·후기·스터디·앨범)
-Activity 메뉴는 6개 섹션(`notices` · `news` · `conferences` · `posts` · `studies` · `albums`)으로 나뉩니다.
+Activity 메뉴는 5개 섹션(`notices` · `news` · `conferences` · `posts` · `studies`)으로 나뉩니다.
 각 섹션은 **글 하나 = 파일 하나** 로 관리합니다.
 
 > **📌 새 글 올리는 법 (2단계)**
@@ -139,28 +134,31 @@ Activity 메뉴는 6개 섹션(`notices` · `news` · `conferences` · `posts` �
 ```
 - 사진은 `images/conferences/` 에 올립니다. · `date` 학회 일정/장소 · `venue` 학회명(선택)
 
-**④ 뉴스레터 — `data/posts/<id>.json`** (학생 후기/블로그, 작성자 표시)
+**④ 뉴스레터 — `data/posts/<id>.json`** (학회 후기 인터뷰, 작성자 표시)
+
+질문 4개는 **고정**입니다. 글마다 `answers` 에 답 4개만 채우면 자동으로 인터뷰 형식(Q1~Q4)으로 표시됩니다.
+> Q1. 학회에 가기 전 가장 기대했던 점은 무엇이었나요?
+> Q2. 현장에서 가장 기억에 남았던 발표, 사람, 장면은 무엇이었나요?
+> Q3. 이번 학회를 통해 새롭게 알게 되거나 생각이 바뀐 부분이 있나요?
+> Q4. AIHC Lab 구성원으로서 앞으로 어떤 연구를 해보고 싶어졌나요?
 ```json
 { "id": "review-1", "tag": "학회 후기", "author": "홍길동", "authorImg": "홍길동.png",
   "conf": "KIIE 2026", "posted": "2026-06-25", "title": "후기 제목",
-  "excerpt": "목록에 보일 짧은 미리보기", "hero": "", "blocks": [ { "p": "본문" } ] }
+  "excerpt": "목록에 보일 짧은 미리보기", "hero": "대표사진.png",
+  "answers": ["Q1 답변", "Q2 답변", "Q3 답변", "Q4 답변"],
+  "photos": ["사진1.jpeg", "사진2.jpeg"] }
 ```
-- `author` 작성자 이름 · `authorImg` 작성자 사진(`images/members/` 의 파일명) · `conf` 관련 학회(선택) · `excerpt` 카드 미리보기 글
-- 본문 사진은 `images/posts/` 에 올립니다.
+- `author` 작성자 · `authorImg` 작성자 사진(`images/members/` 파일명) · `conf` 관련 학회 · `excerpt` 카드 미리보기(없으면 첫 답변 사용)
+- `answers` 답변 4개(빈 답은 자동 생략) · `photos` 답변 아래 붙는 사진(선택) · `hero` 대표 사진 · 사진은 모두 `images/posts/` 에
+- 인터뷰가 아닌 자유형 글을 쓰고 싶으면 `answers` 대신 `blocks`(②③ 와 동일)을 쓰면 됩니다.
 
-**⑤ 학부생 스터디 — `data/studies/<id>.json`** (스터디 기록, 게시판형)
+**⑤ 스터디 — `data/studies/<id>.json`** (스터디 기록, 게시판형)
 ```json
 { "id": "ml-2026", "tag": "논문 리뷰", "topic": "머신러닝 기초", "members": "참여자 이름들",
   "posted": "2026-06-26", "title": "스터디 제목", "link": "https://자료링크", "linkText": "자료 보기",
   "blocks": [ { "p": "본문" } ] }
 ```
 - `topic` 주제 · `members` 참여자 · `link`/`linkText` 발표자료·노션 링크(선택) · 사진은 `images/study/`
-
-**⑥ 앨범 — `data/albums/<id>.json`** (좌우로 넘기는 캐러셀)
-```json
-{ "id": "album-1", "tag": "Album", "term": "2026", "posted": "2026-06-26",
-  "title": "앨범 제목", "hero": "대표사진.png", "blocks": [ { "img": "사진.png", "cap": "설명" } ] }
-```
 
 ### 강의 / 협력기관
 - `data/courses.json`: `{ "term": "Spring 2026", "cur": true, "c": ["과목1", "과목2"] }` — `cur` 가 `true` 면 Current 배지

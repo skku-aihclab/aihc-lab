@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="styles.css?v=5">
+<link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
 
@@ -62,7 +62,6 @@
           <a data-go="activity" data-scroll="ac-conf">Conferences</a>
           <a data-go="activity" data-scroll="ac-letter">Newsletter</a>
           <a data-go="activity" data-scroll="ac-study">Study</a>
-          <a data-go="activity" data-scroll="ac-album">Album</a>
         </div>
       </div>
     </nav>
@@ -80,7 +79,7 @@
     <div class="dgroup"><button class="dtoggle">Members <span>+</span></button><div class="dsub"><a data-go="members" data-scroll="m-professor">Professor</a><a data-go="members" data-scroll="m-students">Students</a><a data-go="members" data-scroll="m-alumni">Alumni</a></div></div>
     <div class="dgroup"><button class="dtoggle">Research <span>+</span></button><div class="dsub"><a data-go="research" data-scroll="r-areas">Research Areas</a><a data-go="research" data-scroll="r-projects">Projects</a><a data-go="research" data-scroll="r-courses">Courses</a></div></div>
     <div class="dgroup"><button class="dtoggle">Publications <span>+</span></button><div class="dsub"><a data-go="publications" data-tab="all">All Papers</a><a data-go="publications" data-tab="journal">International Journals</a><a data-go="publications" data-tab="conf">Conferences</a><a data-go="publications" data-tab="prog">In Progress</a></div></div>
-    <div class="dgroup"><button class="dtoggle">Activity <span>+</span></button><div class="dsub"><a data-go="activity" data-scroll="ac-notice">Notice</a><a data-go="activity" data-scroll="ac-news">News</a><a data-go="activity" data-scroll="ac-conf">Conferences</a><a data-go="activity" data-scroll="ac-letter">Newsletter</a><a data-go="activity" data-scroll="ac-study">Study</a><a data-go="activity" data-scroll="ac-album">Album</a></div></div>
+    <div class="dgroup"><button class="dtoggle">Activity <span>+</span></button><div class="dsub"><a data-go="activity" data-scroll="ac-notice">Notice</a><a data-go="activity" data-scroll="ac-news">News</a><a data-go="activity" data-scroll="ac-conf">Conferences</a><a data-go="activity" data-scroll="ac-letter">Newsletter</a><a data-go="activity" data-scroll="ac-study">Study</a></div></div>
   </div>
 </div>
 
@@ -368,19 +367,9 @@
 
     <!-- Study -->
     <div class="sub-headrow anchor" id="ac-study">
-      <h3 class="sub-head">Study <span class="sub-note">학부생 스터디 기록</span></h3>
+      <h3 class="sub-head">Study <span class="sub-note">스터디 기록</span></h3>
     </div>
     <div class="notice-board reveal" id="studyBoard"></div>
-
-    <!-- Album -->
-    <div class="sub-headrow anchor" id="ac-album">
-      <h3 class="sub-head">Album</h3>
-      <div class="cnav">
-        <button class="cbtn" data-track="albumTrack" data-dir="-1" aria-label="이전">‹</button>
-        <button class="cbtn" data-track="albumTrack" data-dir="1" aria-label="다음">›</button>
-      </div>
-    </div>
-    <div class="carousel reveal"><div class="ctrack" id="albumTrack"></div></div>
   </div>
 </section>
 
@@ -438,6 +427,6 @@
   </div>
 </footer>
 
-<script src="app.js?v=5"></script>
+<script src="app.js?v=11"></script>
 </body>
 </html>

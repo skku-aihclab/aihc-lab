@@ -6,7 +6,6 @@
   "init": "DC",
   "img": "조다윗.png",
   "degree": "석사과정",
-  "year": "",
   "email": "dawitcho@g.skku.edu",
   "education": [],
   "ri": [
@@ -15,6 +14,5 @@
     "Clinical Notes",
     "Biomedical Text Mining"
   ],
-  "bio": "",
   "blocks": []
 }
