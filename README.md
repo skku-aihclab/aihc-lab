@@ -117,4 +117,4 @@ git add -A
 git commit -m "내용 수정 설명"
 git push
 ```
-약 1분 뒤 https://myshin22.github.io/aihc-lab/ 에 자동 반영됩니다.
+약 1분 뒤 https://skku-aihclab.github.io/aihc-lab/ 에 자동 반영됩니다.
