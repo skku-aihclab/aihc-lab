@@ -1,8 +1,8 @@
 # AI-Healthcare Lab 홈페이지
 
-성균관대학교 시스템경영공학과 AI-Healthcare Lab 연구실 홈페이지입니다.
+성균관대학교 시스템경영공학과 AI-Healthcare Lab 연구실 홈페이지
 
-공개 주소: https://myshin22.github.io/aihc-lab/
+공개 주소: https://skku-aihclab.github.io/aihc-lab/
 
 ---
 
