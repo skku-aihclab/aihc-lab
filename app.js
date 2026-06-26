@@ -39,12 +39,19 @@ function setupMembers(arr) {
   });
   Object.keys(GROUP_GRID).forEach(g => {
     const el = $(GROUP_GRID[g]);
-    if (el) el.innerHTML = (buckets[g] || []).map(pc).join('');
+    if (!el) return;
+    const items = buckets[g] || [];
+    el.innerHTML = items.map(pc).join('');
+    /* 멤버가 없는 그룹은 제목까지 숨김 (예: 비학위 인원이 없을 때) */
+    const empty = items.length === 0;
+    el.style.display = empty ? 'none' : '';
+    const heading = el.previousElementSibling;
+    if (heading && heading.classList.contains('sub-head')) heading.style.display = empty ? 'none' : '';
   });
 }
-/* 지위 한 줄(영문) — 예: "Master Student" (연도는 Education 항목에 표기) */
+/* 지위 한 줄(영문) — role 이 있으면 그걸, 없으면 소속 그룹 라벨 */
 function memberRole(m) {
-  return m._group || '';
+  return m.role || m._group || '';
 }
 /* 카드: 클릭 전에도 사진·이름·지위·기간·관심사·학력·이메일을 모두 표시 (클릭 시 블로그 본문 추가) */
 const pc = p => {
