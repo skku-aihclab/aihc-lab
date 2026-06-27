@@ -218,7 +218,7 @@ function openArticle(type, id) {
       </section>`;
     }).join('');
   }
-  const hero = (n.hero && type !== 'post') ? `<div class="imgbox"><img src="images/${f}/${enc(n.hero)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>` : '';
+  const hero = n.hero ? `<div class="imgbox"><img src="images/${f}/${enc(n.hero)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>` : '';
   const ext = n.link && !n.link.startsWith('mailto:');
   const link = n.link ? `<p style="margin-top:28px"><a class="btn btn-cobalt" href="${n.link}"${ext ? ' target="_blank" rel="noopener"' : ''}>${n.linkText || '바로가기 →'}</a></p>` : '';
   /* 첨부파일 — files/<섹션폴더>/<글id>/<파일명>. 항목: "파일.pdf" 또는 {file,label} */
@@ -274,35 +274,19 @@ function renderCardGrid(mountId, items, type, folder) {
   </div>`).join('') || '<div class="nb-empty">아직 등록된 글이 없습니다.</div>';
 }
 
-/* ---------- 뉴스레터(블로그) 카드 ---------- */
-/* 후기 종류 아이콘 — 행사 단위 글이라 특정 작성자 사진 대신 표시 */
-function postIcon(tag) {
-  if (tag === '실험 후기')
-    return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v5.5L4.8 18a2 2 0 0 0 1.7 3h11a2 2 0 0 0 1.7-3L14 8.5V3"/><path d="M7.5 14h9"/></svg>';
-  if (tag === '학회 후기')
-    return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18v11H3z"/><path d="M12 15v4"/><path d="M8 21h8"/></svg>';
-  return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13v14H4z"/><path d="M17 8h3v9a2 2 0 0 1-2 2h-1"/><path d="M7 8h7M7 12h7M7 16h4"/></svg>';
-}
-/* 대표사진 썸네일 — 아이콘을 깔고 hero(images/posts) 사진으로 덮음. 사진 없거나 로드 실패 시 아이콘 노출 */
-function postThumb(p) {
-  const img = p.hero ? `<img src="images/posts/${enc(p.id)}/${enc(p.hero)}" alt="" onerror="this.remove()">` : '';
-  return `<div class="cthumb thumb-ph">${postIcon(p.tag)}${img}</div>`;
-}
+/* ---------- 뉴스레터(블로그) 카드 — 이미지 없는 텍스트 카드 (News 섹션과 시각적 중복 방지) ---------- */
 function renderPostGrid() {
   const sorted = [...posts].sort((a, b) => String(b.posted || '').localeCompare(String(a.posted || '')));
   $('postGrid').innerHTML = sorted.map(p => {
     const people = postPeople(p) || [];
-    const sub = `${fmtDate(p.posted)}${people.length ? ` · ${people.length}명 참여` : ''}`;
+    const sub = `${fmtDate(p.posted)}${p.conf ? ' · ' + p.conf : ''}${people.length ? ` · ${people.length}명` : ''}`;
     const lead = people[0] || {};
     const excerpt = p.excerpt || (lead.qa && lead.qa.find(x => x && x.a) || {}).a || '';
     return `<div class="post-card reveal" data-open="post:${p.id}">
-    ${postThumb(p)}
-    <div class="conf-body">
-      <div class="conf-term">${p.conf || ''}</div>
-      <h4>${p.title}</h4>
-      ${excerpt ? `<p class="post-excerpt">${excerpt}</p>` : ''}
-      <div class="conf-foot"><span class="ctag">${p.tag || '후기'}</span><span class="nb-date">${sub}</span></div>
-    </div>
+    <div class="post-sub">${sub}</div>
+    <h4 class="post-title">${p.title}</h4>
+    ${excerpt ? `<p class="post-excerpt">${excerpt}</p>` : ''}
+    <span class="post-tag">${p.tag || '후기'}</span>
   </div>`;
   }).join('') || '<div class="nb-empty">아직 등록된 글이 없습니다.</div>';
 }
