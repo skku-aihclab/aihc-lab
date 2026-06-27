@@ -53,6 +53,23 @@ function setupMembers(arr) {
 function memberRole(m) {
   return m.role || m._group || '';
 }
+/* 입학 시점(admit: "YYYY-spring"|"YYYY-fall") 기준으로 현재 석사 학기 자동 계산.
+   봄학기=3~8월, 가을학기=9~12월(1~2월은 직전 가을). 석사는 최대 4학기. */
+function semIndex(year, month) {
+  if (month >= 3 && month <= 8) return year * 2;      // 봄학기
+  if (month >= 9) return year * 2 + 1;                // 가을학기
+  return (year - 1) * 2 + 1;                          // 1~2월 → 직전 가을
+}
+function masterTerm(m) {
+  if (!m || !m.admit) return (m && m.degree) || '';
+  const [y, t] = String(m.admit).split('-');
+  const admitIdx = (+y) * 2 + (t === 'fall' ? 1 : 0);
+  const d = new Date();
+  const n = semIndex(d.getFullYear(), d.getMonth() + 1) - admitIdx + 1;
+  if (n < 1) return '입학 예정';
+  if (n > 4) return '수료';
+  return `석사 ${n}학기`;
+}
 /* 카드: 클릭 전에도 사진·이름·지위·기간·관심사·학력·이메일을 모두 표시 (클릭 시 블로그 본문 추가) */
 const pc = p => {
   const ri = (p.ri || []).filter(Boolean).join(', ');
@@ -61,6 +78,7 @@ const pc = p => {
     <div class="pc-avatar" style="background:${p._bg}">${p.img ? `<img src="images/members/${enc(p.img)}" alt="${p.en || p.ko}" onerror="this.remove()">` : (p.init || '')}</div>
     <h4 class="pc-name">${p.en ? `${p.en} <span class="pc-ko">(${p.ko})</span>` : p.ko}</h4>
     <div class="pc-role">${memberRole(p)}</div>
+    ${p.admit ? `<div class="pc-term">${masterTerm(p)}</div>` : ''}
     <div class="pc-divider"></div>
     ${ri ? `<div class="pc-sec"><h5>Research Interests</h5><p>${ri}</p></div>` : ''}
     ${edu.length ? `<div class="pc-sec"><h5>Education</h5><p>${edu.join('<br>')}</p></div>` : ''}
@@ -87,7 +105,7 @@ function openMember(id) {
     <div class="md-head">
       ${avatar}
       <div class="md-info">
-        <div class="md-group">${memberRole(m)}</div>
+        <div class="md-group">${memberRole(m)}${m.admit ? ` · ${masterTerm(m)}` : ''}</div>
         <h1>${m.ko}</h1>
         ${m.en ? `<div class="md-en">${m.en}</div>` : ''}
         ${tags ? `<div class="tag-line md-tags">${tags}</div>` : ''}
@@ -115,7 +133,7 @@ function articleMeta(type, n) {
   if (n.posted) m.push(`<span class="adate">게시일 ${fmtDate(n.posted)}</span>`);
   if (type === 'conference' && n.date) m.push(`<span class="adate">${n.date}</span>`);
   if (type === 'notice' && n.deadline) m.push(`<span class="adate">마감 ${fmtDate(n.deadline)}</span>`);
-  if (type === 'post' && n.author) m.push(`<span class="adate">${n.author}${n.conf ? ' · ' + n.conf : ''}</span>`);
+  if (type === 'post' && (n.conf || n.author)) m.push(`<span class="adate">${n.conf || n.author}</span>`);
   if (type === 'study') {
     if (n.topic) m.push(`<span class="adate">${n.topic}</span>`);
     if (n.members) m.push(`<span class="adate">${n.members}</span>`);
@@ -123,40 +141,99 @@ function articleMeta(type, n) {
   return m.join('');
 }
 
-/* Newsletter(인터뷰) 고정 질문 — 글마다 answers 배열에 답만 채우면 됩니다 */
-const POST_QUESTIONS = [
-  '학회에 가기 전 가장 기대했던 점은 무엇이었나요?',
-  '현장에서 가장 기억에 남았던 발표, 사람, 장면은 무엇이었나요?',
-  '이번 학회를 통해 새롭게 알게 되거나 생각이 바뀐 부분이 있나요?',
-  'AIHC Lab 구성원으로서 앞으로 어떤 연구를 해보고 싶어졌나요?'
-];
+/* Newsletter(카드뉴스 인터뷰) 고정 질문 — 후기 종류별로 질문만 정의하고,
+   글에서는 people[].qa[]에 답(a)과 사진(img)만 채우면 됩니다 */
+const POST_QUESTIONS = {
+  '학회 후기': [
+    '간단한 자기소개 부탁드립니다!',
+    '학회 중 기억에 남는 순간이 언제인가요?',
+    '학회 소감과 앞으로의 계획이 있나요?'
+  ],
+  '실험 후기': [
+    '간단한 자기소개 부탁드립니다!',
+    '이번에 어떤 실험에 참여하셨나요?',
+    '실험하면서 가장 기억에 남는 순간은 무엇인가요?',
+    '실험 후기와 앞으로의 계획이 있나요?'
+  ]
+};
+const DEFAULT_QUESTIONS = POST_QUESTIONS['학회 후기'];
+
+/* 글 데이터를 참여자(people) 배열로 정규화 — 구버전(answers/단일 작성자)도 호환 */
+function postPeople(p) {
+  if (Array.isArray(p.people)) return p.people;
+  if (Array.isArray(p.answers))
+    return [{ author: p.author, authorImg: p.authorImg, interests: p.interests,
+              term: p.term, qa: p.answers.map(a => ({ a })) }];
+  return null;
+}
 
 function openArticle(type, id) {
   const sec = SECTIONS[type]; if (!sec) return;
   const n = sec.list().find(x => x.id === id); if (!n) return;
-  const f = sec.folder;
+  /* 포스트(뉴스레터) 이미지는 글마다 폴더로 분리: images/posts/<글id>/ */
+  const f = type === 'post' ? `posts/${n.id}` : sec.folder;
   const fig = im => `<figure><div class="imgbox"><img src="images/${f}/${enc(im)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div></figure>`;
   let body = (n.blocks || []).map(b => {
     if (b.p) return `<p>${b.p}</p>`;
     if (b.img) return `<figure><div class="imgbox"><img src="images/${f}/${enc(b.img)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div><figcaption>${b.cap || ''}</figcaption></figure>`;
     return '';
   }).join('');
-  if (type === 'post' && Array.isArray(n.answers)) {
-    const qa = POST_QUESTIONS.map((q, i) => {
-      const a = (n.answers[i] || '').trim();
-      return a ? `<div class="qa"><div class="qa-q"><span class="qa-num">Q${i + 1}</span><span>${q}</span></div><p class="qa-a">${a}</p></div>` : '';
+  const people = type === 'post' ? postPeople(n) : null;
+  if (people) {
+    const qs = POST_QUESTIONS[n.tag] || DEFAULT_QUESTIONS;
+    body = people.map(person => {
+      /* 프로필 정보는 멤버 데이터(data/members)에서 재사용 — 글에는 이름·답변만 채우면 됨 */
+      const mem = memberMap[person.author] || {};
+      const photoFile = person.authorImg || mem.img;
+      const photo = photoFile
+        ? `<div class="iv-photo"><img src="images/members/${enc(photoFile)}" alt="${person.author || ''}" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>`
+        : '<div class="iv-photo noimg"></div>';
+      const program = person.program || masterTerm(mem) || '';
+      const interests = person.interests || (mem.ri || []).filter(Boolean).join(', ');
+      const email = person.email || mem.email || '';
+      const meta = [];
+      if (interests) meta.push(`<dt>Research Interests</dt><dd>${interests}</dd>`);
+      if (email) meta.push(`<dt>Email</dt><dd><a href="mailto:${email}" onclick="event.stopPropagation()">${email}</a></dd>`);
+      const qa = qs.map((q, i) => {
+        const item = (person.qa && person.qa[i]) || {};
+        const a = (item.a || '').trim();
+        if (!a) return '';
+        const shot = item.img
+          ? `<div class="iv-shot"><img src="images/${f}/${enc(item.img)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>`
+          : '';
+        return `<div class="iv-block">
+          <div class="iv-q"><span>${q}</span></div>
+          <div class="iv-row${item.img ? '' : ' nophoto'}">${shot}<div class="iv-bubble">${a}</div></div>
+        </div>`;
+      }).join('');
+      return `<section class="iv-card">
+        <div class="iv-head">
+          <div class="iv-id">
+            <h3 class="iv-name">${person.author || ''}${program ? `<span>${program}</span>` : ''}</h3>
+            ${meta.length ? `<dl class="iv-meta">${meta.join('')}</dl>` : ''}
+          </div>
+          ${photo}
+        </div>
+        <div class="iv-qa">${qa}</div>
+      </section>`;
     }).join('');
-    body = qa + (n.photos || []).map(fig).join('');
   }
-  const hero = n.hero ? `<div class="imgbox"><img src="images/${f}/${enc(n.hero)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>` : '';
+  const hero = (n.hero && type !== 'post') ? `<div class="imgbox"><img src="images/${f}/${enc(n.hero)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>` : '';
   const ext = n.link && !n.link.startsWith('mailto:');
   const link = n.link ? `<p style="margin-top:28px"><a class="btn btn-cobalt" href="${n.link}"${ext ? ' target="_blank" rel="noopener"' : ''}>${n.linkText || '바로가기 →'}</a></p>` : '';
+  /* 첨부파일 — files/<섹션폴더>/<글id>/<파일명>. 항목: "파일.pdf" 또는 {file,label} */
+  const attach = (n.attachments && n.attachments.length) ? `<div class="attach"><div class="attach-h">첨부파일</div>${n.attachments.map(a => {
+    const file = typeof a === 'string' ? a : a.file;
+    const label = (typeof a === 'object' && a.label) || file;
+    return `<a class="att-item" href="files/${f}/${enc(n.id)}/${enc(file)}" download><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg><span>${label}</span></a>`;
+  }).join('')}</div>` : '';
   $('articleMount').innerHTML = `
     <div class="crumb"><a data-go="activity" data-scroll="${sec.anchor}">Activity</a> › <a data-go="activity" data-scroll="${sec.anchor}">${sec.label}</a> › <span>${n.title}</span></div>
     <h1>${n.title}</h1>
     <div class="ameta">${articleMeta(type, n)}</div>
     ${hero}
     ${body}
+    ${attach}
     ${link}
     <button class="back-btn" data-go="activity" data-scroll="${sec.anchor}">← ${sec.label} 목록으로</button>`;
   go('article-detail');
@@ -198,17 +275,36 @@ function renderCardGrid(mountId, items, type, folder) {
 }
 
 /* ---------- 뉴스레터(블로그) 카드 ---------- */
+/* 후기 종류 아이콘 — 행사 단위 글이라 특정 작성자 사진 대신 표시 */
+function postIcon(tag) {
+  if (tag === '실험 후기')
+    return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v5.5L4.8 18a2 2 0 0 0 1.7 3h11a2 2 0 0 0 1.7-3L14 8.5V3"/><path d="M7.5 14h9"/></svg>';
+  if (tag === '학회 후기')
+    return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18v11H3z"/><path d="M12 15v4"/><path d="M8 21h8"/></svg>';
+  return '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13v14H4z"/><path d="M17 8h3v9a2 2 0 0 1-2 2h-1"/><path d="M7 8h7M7 12h7M7 16h4"/></svg>';
+}
+/* 대표사진 썸네일 — 아이콘을 깔고 hero(images/posts) 사진으로 덮음. 사진 없거나 로드 실패 시 아이콘 노출 */
+function postThumb(p) {
+  const img = p.hero ? `<img src="images/posts/${enc(p.id)}/${enc(p.hero)}" alt="" onerror="this.remove()">` : '';
+  return `<div class="cthumb thumb-ph">${postIcon(p.tag)}${img}</div>`;
+}
 function renderPostGrid() {
   const sorted = [...posts].sort((a, b) => String(b.posted || '').localeCompare(String(a.posted || '')));
-  $('postGrid').innerHTML = sorted.map(p => `<div class="post-card reveal" data-open="post:${p.id}">
-    <div class="post-top">
-      <div class="post-avatar">${p.authorImg ? `<img src="images/members/${enc(p.authorImg)}" alt="${p.author || ''}" onerror="this.remove()">` : (p.author ? p.author[0] : '')}</div>
-      <div class="post-by"><div class="post-author">${p.author || ''}</div><div class="post-sub">${fmtDate(p.posted)}${p.conf ? ' · ' + p.conf : ''}</div></div>
+  $('postGrid').innerHTML = sorted.map(p => {
+    const people = postPeople(p) || [];
+    const sub = `${fmtDate(p.posted)}${people.length ? ` · ${people.length}명 참여` : ''}`;
+    const lead = people[0] || {};
+    const excerpt = p.excerpt || (lead.qa && lead.qa.find(x => x && x.a) || {}).a || '';
+    return `<div class="post-card reveal" data-open="post:${p.id}">
+    ${postThumb(p)}
+    <div class="conf-body">
+      <div class="conf-term">${p.conf || ''}</div>
+      <h4>${p.title}</h4>
+      ${excerpt ? `<p class="post-excerpt">${excerpt}</p>` : ''}
+      <div class="conf-foot"><span class="ctag">${p.tag || '후기'}</span><span class="nb-date">${sub}</span></div>
     </div>
-    <h4 class="post-title">${p.title}</h4>
-    <p class="post-excerpt">${p.excerpt || (p.answers && p.answers.find(Boolean)) || ''}</p>
-    <span class="post-tag">${p.tag || '후기'}</span>
-  </div>`).join('') || '<div class="nb-empty">아직 등록된 글이 없습니다.</div>';
+  </div>`;
+  }).join('') || '<div class="nb-empty">아직 등록된 글이 없습니다.</div>';
 }
 
 /* ---------- 홈 'Lab News' — 공지/학회/뉴스레터 최신 묶음 ---------- */
