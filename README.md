@@ -177,13 +177,24 @@ Activity 메뉴는 5개 섹션(`notices` · `news` · `conferences` · `posts` �
 - `hero` **상세 페이지 맨 위 대표 배너**(선택, 없으면 `""`) — 목록 카드는 이미지 없는 텍스트 카드입니다.
 - **사진은 모두 그 글 폴더 `images/posts/<글id>/` 에 올립니다.** (예: `images/posts/kiie-2026-review/사진1.jpeg`)
 
-**⑤ 스터디 — `data/studies/<id>.json`** (스터디 기록, 게시판형)
+**⑤ 스터디 — `data/studies/<id>.json`** (카드형 · 카드를 누르면 **주차별 아코디언**으로 펼쳐 봄)
+
+스터디 하나에 **여러 주차**를 쌓습니다. 카드를 누르면 주차 목록이 나오고, **첫 주차(1주차)가 펼쳐진 상태**로 열립니다. 다른 주차를 누르면 그 주차가 펼쳐집니다.
 ```json
-{ "id": "ml-2026", "tag": "논문 리뷰", "topic": "머신러닝 기초", "members": "참여자 이름들",
-  "posted": "2026-06-26", "title": "스터디 제목", "link": "https://자료링크", "linkText": "자료 보기",
-  "blocks": [ { "p": "본문" } ] }
+{ "id": "ml-2026", "tag": "논문 리뷰", "topic": "머신러닝 기초 / 논문 리뷰",
+  "members": "참여자 이름들", "posted": "2026-06-26", "title": "스터디 제목",
+  "weeks": [
+    { "no": 1, "date": "2026-07-01", "title": "이번 주차 주제", "presenter": "발표자",
+      "slides": "1주차_발표.pptx", "link": "https://자료링크", "linkText": "발표자료",
+      "blocks": [ { "p": "그 주에 다룬 내용·토론 메모" }, { "img": "사진.png", "cap": "설명" } ] },
+    { "no": 2, "date": "2026-07-08", "title": "다음 주차 주제", "presenter": "", "blocks": [] }
+  ] }
 ```
-- `topic` 주제 · `members` 참여자 · `link`/`linkText` 발표자료·노션 링크(선택) · 사진은 `images/study/`
+- `topic` 주제 · `members` 참여자(카드에 표시) — 여기까지는 **카드(목록)** 에 보입니다.
+- `weeks` **주차 목록** — 한 주차 = `{ "no": 주차번호, "date": "날짜", "title": "주제", "presenter": "발표자", "slides": 발표자료, "link"/"linkText": 자료 링크(선택), "blocks": 메모·사진 }`
+  - `blocks` 는 그 주차의 본문(글 `{ "p": ... }` / 사진 `{ "img": "...", "cap": "..." }`). 비워 두면(`[]`) "아직 기록이 없습니다"로 표시됩니다.
+  - 사진은 `images/study/` 에 올립니다.
+  - `slides` **발표자료 임베드**(선택) — `.pptx`/`.ppt`(또는 `.pdf`) 파일을 `files/study/<글id>/` 에 올리고 파일명을 적으면, 그 주차 안에 **슬라이드를 옆으로 넘기며 보는 뷰어**가 embed 됩니다. (PPT 는 Microsoft Office 온라인 뷰어로 표시되며 **실제 사이트(GitHub Pages)에서만 동작** — 로컬 미리보기에서는 안 보일 수 있습니다. 뷰어 아래에 다운로드 링크도 함께 표시됩니다.)
 
 ### 강의 / 협력기관
 - `data/courses.json`: `{ "term": "Spring 2026", "cur": true, "c": ["과목1", "과목2"] }` — `cur` 가 `true` 면 Current 배지

@@ -3,17 +3,17 @@
   "tag": "논문 리뷰",
   "topic": "머신러닝 기초 / 논문 리뷰",
   "members": "학부 연구생 일동",
-  "posted": "2026-06-26",
-  "title": "여름방학 머신러닝 스터디 (예시)",
-  "link": "",
-  "linkText": "",
+  "posted": "2026-08-01",
+  "title": "여름방학 VLA 스터디",
   "hero": "",
-  "blocks": [
-    {
-      "p": " 함께 진행하는 스터디 기록을 남기는 게시판입니다. 매주 다룬 주제, 발표자, 자료 링크 등을 정리해 주세요."
-    },
-    {
-      "p": "이 항목은 작성 예시입니다. 스터디 주제·교재·진행 방식을 적고, 발표 자료나 노션 링크가 있으면 link 항목에 넣어 주세요."
-    }
+  "weeks": [
+    { "no": 1, "date": "2026-07-01", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
+    { "no": 2, "date": "2026-07-08", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
+    { "no": 3, "date": "2026-07-15", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
+    { "no": 4, "date": "2026-07-22", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
+    { "no": 5, "date": "2026-07-29", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
+    { "no": 6, "date": "2026-08-05", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
+    { "no": 7, "date": "2026-08-12", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
+    { "no": 8, "date": "2026-08-19", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] }
   ]
 }

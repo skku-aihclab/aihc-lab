@@ -167,6 +167,18 @@ function postPeople(p) {
   return null;
 }
 
+/* 발표자료(PPT/PDF) 임베드 — 슬라이드를 옆으로 넘기며 볼 수 있음.
+   파일은 files/<섹션>/<글id>/ 에 두고, .pptx/.ppt 는 Office Online 뷰어, .pdf 는 브라우저 내장 뷰어로 표시.
+   ※ Office 뷰어는 파일이 외부에서 접근 가능한 공개 URL 이어야 하므로 GitHub Pages 배포본에서 동작(로컬 http.server 에서는 미표시). */
+function slideEmbed(folder, id, file) {
+  const url = new URL(`files/${folder}/${id}/${file}`, location.href).href;
+  const src = /\.pdf$/i.test(file)
+    ? url
+    : `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`;
+  return `<div class="slides"><iframe src="${src}" frameborder="0" allowfullscreen></iframe></div>
+    <div class="slides-note"><a href="${url}" download>⬇ 발표자료 내려받기 (${file})</a></div>`;
+}
+
 function openArticle(type, id) {
   const sec = SECTIONS[type]; if (!sec) return;
   const n = sec.list().find(x => x.id === id); if (!n) return;
@@ -218,6 +230,29 @@ function openArticle(type, id) {
       </section>`;
     }).join('');
   }
+  if (type === 'study' && Array.isArray(n.weeks)) {
+    body = n.weeks.map((w, i) => {
+      const open = i === 0;                 /* 열면 1주차가 기본 펼침 */
+      const wb = (w.blocks || []).map(b => {
+        if (b.p) return `<p>${b.p}</p>`;
+        if (b.img) return `<figure><div class="imgbox"><img src="images/${f}/${enc(b.img)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div><figcaption>${b.cap || ''}</figcaption></figure>`;
+        return '';
+      }).join('');
+      const wlink = w.link ? `<p style="margin-top:14px"><a class="btn btn-cobalt" href="${w.link}"${w.link.startsWith('mailto:') ? '' : ' target="_blank" rel="noopener"'}>${w.linkText || '자료 보기 →'}</a></p>` : '';
+      const wslides = w.slides ? slideEmbed(f, n.id, w.slides) : '';
+      const placeholder = (wb || wslides) ? '' : '<p class="wk-empty">아직 기록이 없습니다.</p>';
+      const inner = (w.presenter ? `<div class="wk-meta">발표 · ${w.presenter}</div>` : '') + wb + wslides + placeholder + wlink;
+      return `<div class="wk${open ? ' open' : ''}">
+        <button class="wk-head" data-acc>
+          <span class="wk-no">${w.no || i + 1}주차</span>
+          <span class="wk-t">${w.title || ''}</span>
+          <span class="wk-date">${w.date ? fmtDate(w.date) : ''}</span>
+          <span class="wk-x">▾</span>
+        </button>
+        <div class="wk-body">${inner}</div>
+      </div>`;
+    }).join('');
+  }
   const hero = n.hero ? `<div class="imgbox"><img src="images/${f}/${enc(n.hero)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>` : '';
   const ext = n.link && !n.link.startsWith('mailto:');
   const link = n.link ? `<p style="margin-top:28px"><a class="btn btn-cobalt" href="${n.link}"${ext ? ' target="_blank" rel="noopener"' : ''}>${n.linkText || '바로가기 →'}</a></p>` : '';
@@ -264,7 +299,7 @@ function cardThumb(folder, hero) {
 }
 function renderCardGrid(mountId, items, type, folder) {
   const sorted = [...items].sort((a, b) => String(b.posted || '').localeCompare(String(a.posted || '')));
-  $(mountId).innerHTML = sorted.map(c => `<div class="conf-card reveal" data-open="${type}:${c.id}">
+  $(mountId).innerHTML = sorted.map(c => `<div class="conf-card" data-open="${type}:${c.id}">
     ${cardThumb(folder, c.hero)}
     <div class="conf-body">
       <div class="conf-term">${c.term || fmtDate(c.posted)}</div>
@@ -282,7 +317,7 @@ function renderPostGrid() {
     const sub = `${fmtDate(p.posted)}${p.conf ? ' · ' + p.conf : ''}${people.length ? ` · ${people.length}명` : ''}`;
     const lead = people[0] || {};
     const excerpt = p.excerpt || (lead.qa && lead.qa.find(x => x && x.a) || {}).a || '';
-    return `<div class="post-card reveal" data-open="post:${p.id}">
+    return `<div class="post-card" data-open="post:${p.id}">
     <div class="post-sub">${sub}</div>
     <h4 class="post-title">${p.title}</h4>
     ${excerpt ? `<p class="post-excerpt">${excerpt}</p>` : ''}
@@ -290,6 +325,25 @@ function renderPostGrid() {
   </div>`;
   }).join('') || '<div class="nb-empty">아직 등록된 글이 없습니다.</div>';
 }
+
+/* ---------- 스터디 카드 (뉴스레터와 동일한 텍스트 카드 형식) ---------- */
+function renderStudyGrid() {
+  const sorted = [...studies].sort((a, b) => String(b.posted || '').localeCompare(String(a.posted || '')));
+  $('studyBoard').innerHTML = sorted.map(s => {
+    const sub = `${fmtDate(s.posted)}${s.members ? ' · ' + s.members : ''}`;
+    const excerpt = s.excerpt
+      || (Array.isArray(s.weeks) && s.weeks.length ? `총 ${s.weeks.length}주차 진행` : '')
+      || (s.blocks && s.blocks.find(b => b.p) || {}).p || '';
+    return `<div class="post-card" data-open="study:${s.id}">
+    <div class="post-sub">${sub}</div>
+    <h4 class="post-title">${s.title}</h4>
+    ${s.topic ? `<div class="post-topic">${s.topic}</div>` : ''}
+    ${excerpt ? `<p class="post-excerpt">${excerpt}</p>` : ''}
+    <span class="post-tag">${s.tag || '스터디'}</span>
+  </div>`;
+  }).join('') || '<div class="nb-empty">아직 등록된 글이 없습니다.</div>';
+}
+
 
 /* ---------- 홈 'Lab News' — 공지/학회/뉴스레터 최신 묶음 ---------- */
 function renderLatest() {
@@ -329,6 +383,10 @@ function go(id, scrollTo, tab) {
   }, 50);
 }
 document.addEventListener('click', e => {
+  const acc = e.target.closest('[data-acc]');
+  if (acc) { const wk = acc.parentElement; const wasOpen = wk.classList.contains('open');
+    wk.parentElement.querySelectorAll('.wk.open').forEach(x => x.classList.remove('open'));
+    if (!wasOpen) wk.classList.add('open'); return; }
   const cb = e.target.closest('[data-track]');
   if (cb) { e.preventDefault(); const tr = $(cb.dataset.track); if (tr) tr.scrollBy({ left: (+cb.dataset.dir) * Math.max(tr.clientWidth * 0.8, 320), behavior: 'smooth' }); return; }
   const op = e.target.closest('[data-open]');
@@ -407,7 +465,7 @@ async function init() {
   renderCardGrid('newsGrid', news, 'news', 'news');
   renderCardGrid('confGrid', conferences, 'conference', 'conferences');
   renderPostGrid();
-  renderBoard('studyBoard', studies, 'study');
+  renderStudyGrid();
   renderLatest();
 
   /* Partners */
