@@ -1,0 +1,19 @@
+{
+  "id": "박준우",
+  "group": "alumni",
+  "role": "Undergraduate Researcher",
+  "ko": "박준우",
+  "en": "Junwoo Park",
+  "init": "JP",
+  "img": "",
+  "degree": "학부연구생",
+  "email": "jw0528@skku.edu",
+  "education": [
+    "M.S. Student, University of California, Irvine (UCI)"
+  ],
+  "ri": [
+    "Multimodal Deep Learning",
+    "Molecular Toxicity Prediction"
+  ],
+  "blocks": []
+}
