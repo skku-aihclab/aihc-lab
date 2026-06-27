@@ -12,10 +12,10 @@
     "B.S in Statistics, Sungkyunkwan University (2021 - 2025)",
     "M.S in Industrial Engineering, Sungkyunkwan University(2025 – Present)"
   ],
-  "ri": [
-    "Healthcare",
-    "Multimodal Foundation Models",
-    "Offline RL for Clinical Decision-Making"
+  "ri": [ 
+  "Healthcare AI", 
+  "Medical LLMs", 
+  "Multimodal Biosignal Analysis"
   ],
   "blocks": []
 }
