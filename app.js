@@ -75,7 +75,7 @@ const pc = p => {
   const ri = (p.ri || []).filter(Boolean).join(', ');
   const edu = (p.education || []).filter(Boolean);
   return `<div class="person-card reveal" data-open="member:${p.id}">
-    <div class="pc-avatar" style="background:${p._bg}">${p.img ? `<img src="images/members/${enc(p.img)}" alt="${p.en || p.ko}" onerror="this.remove()">` : (p.init || '')}</div>
+    <div class="pc-avatar" style="background:${p._bg}">${p.img ? `<img src="images/members/${enc(p.id)}/${enc(p.img)}" alt="${p.en || p.ko}" onerror="this.remove()">` : (p.init || '')}</div>
     <h4 class="pc-name">${p.en ? `${p.en} <span class="pc-ko">(${p.ko})</span>` : p.ko}</h4>
     <div class="pc-role">${memberRole(p)}</div>
     ${p.admit ? `<div class="pc-term">${masterTerm(p)}</div>` : ''}
@@ -86,20 +86,48 @@ const pc = p => {
   </div>`;
 };
 
-/* ---------- Member 상세 페이지 (블로그형 — blocks 로 사진·긴 글 작성 가능) ---------- */
+/* 답변(a) — 긴 글은 JSON 가독성을 위해 배열로 줄을 나눠 쓸 수 있습니다(["문장1","문장2"]).
+   배열은 공백으로 이어붙여 한 문단처럼 표시됩니다(화면은 그대로). 문단을 나누고 싶으면 글 안에 <br><br> 사용. */
+function answerHTML(a) {
+  if (Array.isArray(a)) return a.filter(s => String(s || '').trim()).join(' ').trim();
+  return (a || '').trim();
+}
+
+/* ---------- Member 상세 페이지 (뉴스레터와 동일한 Q&A 카드 형식 — qa, 구버전은 blocks) ----------
+   ※ 멤버 인터뷰 질문(MEMBER_QUESTIONS)은 아래 '고정 질문' 블록에 POST_QUESTIONS 와 함께 모여 있습니다. */
 function openMember(id) {
   const m = memberMap[id]; if (!m) return;
-  const avatar = `<div class="md-avatar" style="background:${m._bg}">${m.img ? `<img src="images/members/${enc(m.img)}" alt="${m.en || m.ko}" onerror="this.remove()">` : ''}${m.init || ''}</div>`;
+  const avatar = `<div class="md-avatar" style="background:${m._bg}">${m.img ? `<img src="images/members/${enc(m.id)}/${enc(m.img)}" alt="${m.en || m.ko}" onerror="this.remove()">` : ''}${m.init || ''}</div>`;
   const tags = (m.ri || []).filter(Boolean).map(t => `<span class="mini-tag">${t}</span>`).join('');
   const rows = [];
   if (m.email) rows.push(`<div class="md-row"><span class="md-k">Email</span><a class="md-v" href="mailto:${m.email}">${m.email}</a></div>`);
   const edu = (m.education && m.education.length) ? `<div class="md-sec"><h3>Education</h3><ul class="md-edu">${m.education.map(e => `<li>${e}</li>`).join('')}</ul></div>` : '';
   const body = (m.blocks || []).map(b => {
-    if (b.p) return `<p>${b.p}</p>`;
-    if (b.img) return `<figure><div class="imgbox"><img src="images/members/${enc(b.img)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div><figcaption>${b.cap || ''}</figcaption></figure>`;
+    if (b.p) return `<p>${answerHTML(b.p)}</p>`;
+    if (b.video) return `<figure class="md-vid"><video src="images/members/${enc(m.id)}/${enc(b.video)}" controls playsinline preload="metadata"></video>${b.cap ? `<figcaption>${b.cap}</figcaption>` : ''}</figure>`;
+    if (b.img) return `<figure><div class="imgbox"><img src="images/members/${enc(m.id)}/${enc(b.img)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div><figcaption>${b.cap || ''}</figcaption></figure>`;
     return '';
   }).join('');
-  const story = body ? `<div class="md-bio">${body}</div>` : '';
+  let inner = body;
+  if (Array.isArray(m.qa)) {
+    let mIdx = 0;
+    inner = MEMBER_QUESTIONS.map((q, i) => {
+      const item = m.qa[i] || {};
+      const a = answerHTML(item.a);
+      if (!a) return '';
+      const media = item.video
+        ? `<div class="iv-vid"><video src="images/members/${enc(m.id)}/${enc(item.video)}" controls playsinline preload="metadata"></video></div>`
+        : item.img
+          ? `<div class="iv-shot"><img src="images/members/${enc(m.id)}/${enc(item.img)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>`
+          : '';
+      const hasMedia = !!(item.video || item.img);
+      const rev = hasMedia && (mIdx % 2 === 1);   /* 미디어 블록 짝수번째(2,4,…)는 오른쪽 */
+      if (hasMedia) mIdx++;
+      const rowCls = hasMedia ? (rev ? 'iv-row iv-row-rev' : 'iv-row') : 'iv-row nophoto';
+      return `<div class="iv-block"><div class="iv-q"><span>${q}</span></div><div class="${rowCls}">${media}<div class="iv-bubble">${a}</div></div></div>`;
+    }).join('');
+  }
+  const story = inner ? `<div class="md-bio${Array.isArray(m.qa) ? ' iv-qa' : ''}">${inner}</div>` : '';
   $('memberMount').innerHTML = `
     <div class="crumb"><a data-go="members" data-scroll="m-students">Members</a> › <span>${m.ko}</span></div>
     <div class="md-head">
@@ -141,22 +169,35 @@ function articleMeta(type, n) {
   return m.join('');
 }
 
-/* Newsletter(카드뉴스 인터뷰) 고정 질문 — 후기 종류별로 질문만 정의하고,
-   글에서는 people[].qa[]에 답(a)과 사진(img)만 채우면 됩니다 */
+/* ===================== 고정 질문 (인터뷰 질문은 여기서만 고치면 전체 반영) =====================
+   글/멤버 파일에서는 답(a)·사진(img)·영상(video)만 채우면 됩니다. */
+
+/* ① Newsletter(카드뉴스 인터뷰) — 후기 종류(tag)별 질문 */
 const POST_QUESTIONS = {
   '학회 후기': [
-    '간단한 자기소개 부탁드립니다!',
+    '이번 학회에는 어떻게 참석하게 되셨고, 무엇을 가장 기대하셨나요?',
     '학회 중 기억에 남는 순간이 언제인가요?',
     '학회 소감과 앞으로의 계획이 있나요?'
   ],
   '실험 후기': [
-    '간단한 자기소개 부탁드립니다!',
+    '이번 실험에는 어떻게 참여하게 되셨나요?',
     '이번에 어떤 실험에 참여하셨나요?',
     '실험하면서 가장 기억에 남는 순간은 무엇인가요?',
     '실험 후기와 앞으로의 계획이 있나요?'
   ]
 };
 const DEFAULT_QUESTIONS = POST_QUESTIONS['학회 후기'];
+
+/* ② 멤버 자기소개 페이지 — 모든 멤버 공통 고정 질문 */
+const MEMBER_QUESTIONS = [
+  '간단한 자기소개 부탁드립니다!',
+  '주요 연구 관심 분야는 무엇인가요?',
+  '현재 진행하고 있는 연구는 무엇인가요?',
+  '헬스케어 AI 연구에 관심을 갖게 된 계기가 있나요?',
+  '연구 외적인 시간은 어떻게 보내시나요?',
+  '앞으로 어떤 연구를 하고 싶나요?'
+];
+/* ============================================================================== */
 
 /* 글 데이터를 참여자(people) 배열로 정규화 — 구버전(answers/단일 작성자)도 호환 */
 function postPeople(p) {
@@ -186,7 +227,7 @@ function openArticle(type, id) {
   const f = type === 'post' ? `posts/${n.id}` : sec.folder;
   const fig = im => `<figure><div class="imgbox"><img src="images/${f}/${enc(im)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div></figure>`;
   let body = (n.blocks || []).map(b => {
-    if (b.p) return `<p>${b.p}</p>`;
+    if (b.p) return `<p>${answerHTML(b.p)}</p>`;
     if (b.img) return `<figure><div class="imgbox"><img src="images/${f}/${enc(b.img)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div><figcaption>${b.cap || ''}</figcaption></figure>`;
     return '';
   }).join('');
@@ -196,9 +237,10 @@ function openArticle(type, id) {
     body = people.map(person => {
       /* 프로필 정보는 멤버 데이터(data/members)에서 재사용 — 글에는 이름·답변만 채우면 됨 */
       const mem = memberMap[person.author] || {};
+      const linked = !!memberMap[person.author];   /* 멤버 데이터가 있으면 프로필 페이지로 연결 */
       const photoFile = person.authorImg || mem.img;
       const photo = photoFile
-        ? `<div class="iv-photo"><img src="images/members/${enc(photoFile)}" alt="${person.author || ''}" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>`
+        ? `<div class="iv-photo"><img src="images/members/${enc(person.author)}/${enc(photoFile)}" alt="${person.author || ''}" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>`
         : '<div class="iv-photo noimg"></div>';
       const program = person.program || masterTerm(mem) || '';
       const interests = person.interests || (mem.ri || []).filter(Boolean).join(', ');
@@ -206,23 +248,28 @@ function openArticle(type, id) {
       const meta = [];
       if (interests) meta.push(`<dt>Research Interests</dt><dd>${interests}</dd>`);
       if (email) meta.push(`<dt>Email</dt><dd><a href="mailto:${email}" onclick="event.stopPropagation()">${email}</a></dd>`);
+      let mIdx = 0;
       const qa = qs.map((q, i) => {
         const item = (person.qa && person.qa[i]) || {};
-        const a = (item.a || '').trim();
+        const a = answerHTML(item.a);
         if (!a) return '';
         const shot = item.img
           ? `<div class="iv-shot"><img src="images/${f}/${enc(item.img)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div>`
           : '';
+        const rev = item.img && (mIdx % 2 === 1);   /* 사진 짝수번째(2,4,…)는 오른쪽 */
+        if (item.img) mIdx++;
+        const rowCls = item.img ? (rev ? 'iv-row iv-row-rev' : 'iv-row') : 'iv-row nophoto';
         return `<div class="iv-block">
           <div class="iv-q"><span>${q}</span></div>
-          <div class="iv-row${item.img ? '' : ' nophoto'}">${shot}<div class="iv-bubble">${a}</div></div>
+          <div class="${rowCls}">${shot}<div class="iv-bubble">${a}</div></div>
         </div>`;
       }).join('');
       return `<section class="iv-card">
-        <div class="iv-head">
+        <div class="iv-head${linked ? ' iv-head-link' : ''}"${linked ? ` data-open="member:${person.author}"` : ''}>
           <div class="iv-id">
             <h3 class="iv-name">${person.author || ''}${program ? `<span>${program}</span>` : ''}</h3>
             ${meta.length ? `<dl class="iv-meta">${meta.join('')}</dl>` : ''}
+            ${linked ? '<span class="iv-prof">프로필 보기 →</span>' : ''}
           </div>
           ${photo}
         </div>
@@ -234,7 +281,7 @@ function openArticle(type, id) {
     body = n.weeks.map((w, i) => {
       const open = i === 0;                 /* 열면 1주차가 기본 펼침 */
       const wb = (w.blocks || []).map(b => {
-        if (b.p) return `<p>${b.p}</p>`;
+        if (b.p) return `<p>${answerHTML(b.p)}</p>`;
         if (b.img) return `<figure><div class="imgbox"><img src="images/${f}/${enc(b.img)}" alt="" onerror="this.parentElement.classList.add('noimg');this.remove()"></div><figcaption>${b.cap || ''}</figcaption></figure>`;
         return '';
       }).join('');
@@ -316,7 +363,8 @@ function renderPostGrid() {
     const people = postPeople(p) || [];
     const sub = `${fmtDate(p.posted)}${p.conf ? ' · ' + p.conf : ''}${people.length ? ` · ${people.length}명` : ''}`;
     const lead = people[0] || {};
-    const excerpt = p.excerpt || (lead.qa && lead.qa.find(x => x && x.a) || {}).a || '';
+    const leadAns = (lead.qa && lead.qa.find(x => x && x.a)) || {};
+    const excerpt = p.excerpt || answerHTML(leadAns.a).replace(/<br\s*\/?>/gi, ' ') || '';
     return `<div class="post-card" data-open="post:${p.id}">
     <div class="post-sub">${sub}</div>
     <h4 class="post-title">${p.title}</h4>
@@ -333,7 +381,7 @@ function renderStudyGrid() {
     const sub = `${fmtDate(s.posted)}${s.members ? ' · ' + s.members : ''}`;
     const excerpt = s.excerpt
       || (Array.isArray(s.weeks) && s.weeks.length ? `총 ${s.weeks.length}주차 진행` : '')
-      || (s.blocks && s.blocks.find(b => b.p) || {}).p || '';
+      || answerHTML((s.blocks && s.blocks.find(b => b.p) || {}).p) || '';
     return `<div class="post-card" data-open="study:${s.id}">
     <div class="post-sub">${sub}</div>
     <h4 class="post-title">${s.title}</h4>

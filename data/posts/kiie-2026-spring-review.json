@@ -7,10 +7,25 @@
   "hero": "",
   "excerpt": "",
   "people": [
-    { "author": "신민영", "qa": [] },
-    { "author": "최유정", "qa": [] },
-    { "author": "강지원", "qa": [] },
-    { "author": "조다윗", "qa": [] },
-    { "author": "박호진", "qa": [] }
+    {
+      "author": "신민영",
+      "qa": []
+    },
+    {
+      "author": "최유정",
+      "qa": []
+    },
+    {
+      "author": "강지원",
+      "qa": []
+    },
+    {
+      "author": "조다윗",
+      "qa": []
+    },
+    {
+      "author": "박호진",
+      "qa": []
+    }
   ]
 }

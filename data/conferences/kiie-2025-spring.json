@@ -9,7 +9,10 @@
   "hero": "2025춘계1.png",
   "blocks": [
     {
-      "p": "2025년 6월 18일부터 6월 21일까지 제주 해비치 호텔 & 리조트에서 열린 대한산업공학회 춘계공동학술대회에 참가했습니다. 이번 학술대회에서는 우리 연구실에서 1건의 구두 발표에 참여했습니다."
+      "p": [
+        "2025년 6월 18일부터 6월 21일까지 제주 해비치 호텔 & 리조트에서 열린 대한산업공학회 춘계공동학술대회에 참가했습니다.",
+        "이번 학술대회에서는 우리 연구실에서 1건의 구두 발표에 참여했습니다."
+      ]
     },
     {
       "p": "<b>구두 발표</b><br><br><b>신민영</b><br>Modeling Heterogeneity in Prescription Patterns of Controlled Substances Using a Poisson Mixture Model"

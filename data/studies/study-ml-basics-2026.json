@@ -7,13 +7,77 @@
   "title": "여름방학 VLA 스터디",
   "hero": "",
   "weeks": [
-    { "no": 1, "date": "2026-07-01", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
-    { "no": 2, "date": "2026-07-08", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
-    { "no": 3, "date": "2026-07-15", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
-    { "no": 4, "date": "2026-07-22", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
-    { "no": 5, "date": "2026-07-29", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
-    { "no": 6, "date": "2026-08-05", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
-    { "no": 7, "date": "2026-08-12", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] },
-    { "no": 8, "date": "2026-08-19", "title": "주제 미정", "presenter": "", "link": "", "linkText": "", "blocks": [] }
+    {
+      "no": 1,
+      "date": "2026-07-01",
+      "title": "주제 미정",
+      "presenter": "",
+      "link": "",
+      "linkText": "",
+      "blocks": []
+    },
+    {
+      "no": 2,
+      "date": "2026-07-08",
+      "title": "주제 미정",
+      "presenter": "",
+      "link": "",
+      "linkText": "",
+      "blocks": []
+    },
+    {
+      "no": 3,
+      "date": "2026-07-15",
+      "title": "주제 미정",
+      "presenter": "",
+      "link": "",
+      "linkText": "",
+      "blocks": []
+    },
+    {
+      "no": 4,
+      "date": "2026-07-22",
+      "title": "주제 미정",
+      "presenter": "",
+      "link": "",
+      "linkText": "",
+      "blocks": []
+    },
+    {
+      "no": 5,
+      "date": "2026-07-29",
+      "title": "주제 미정",
+      "presenter": "",
+      "link": "",
+      "linkText": "",
+      "blocks": []
+    },
+    {
+      "no": 6,
+      "date": "2026-08-05",
+      "title": "주제 미정",
+      "presenter": "",
+      "link": "",
+      "linkText": "",
+      "blocks": []
+    },
+    {
+      "no": 7,
+      "date": "2026-08-12",
+      "title": "주제 미정",
+      "presenter": "",
+      "link": "",
+      "linkText": "",
+      "blocks": []
+    },
+    {
+      "no": 8,
+      "date": "2026-08-19",
+      "title": "주제 미정",
+      "presenter": "",
+      "link": "",
+      "linkText": "",
+      "blocks": []
+    }
   ]
 }
