@@ -75,7 +75,7 @@
         "<b>3) 활용 데이터</b><br>",
         "· (공개) ClinicalTrials.gov 임상시험 프로토콜 텍스트<br>",
         "· (제공) 비식별·예시 환자 프로파일 ※ 난이도 완화를 위해 랩에서 제공<br>",
-        "· (선택) MIMIC-IV 등 — 별도 인증이 필요하며 필수 아님<br>",
+        "· (선택) MIMIC-IV 등 : 별도 인증이 필요하며 필수 아님<br>",
         "<b>4) 최종 판단</b> : 참여 가능(Eligible) / 정보 부족(Insufficient Information) / 참여 불가(Not Eligible) + 판단 근거 제시"
       ]
     },
