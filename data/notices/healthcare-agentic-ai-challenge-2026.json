@@ -8,6 +8,12 @@
   "hero": "AIHC_Healthcare_AI_Agent_Challenge_2026.png",
   "link": "https://forms.gle/dfu9ngZwURTACipn8",
   "linkText": "참가신청·제안서 제출 (Google Form)",
+  "attachments": [
+    {
+      "file": "synthetic-patients.json",
+      "label": "환자 input 데이터 예시 다운로드 (JSON · 10건)"
+    }
+  ],
   "blocks": [
     {
       "p": [
@@ -70,7 +76,7 @@
       "p": [
         "<b>3) 활용 데이터</b><br>",
         "· (공개) ClinicalTrials.gov 임상시험 프로토콜 텍스트<br>",
-        "· 환자 input 데이터 예시 제공 ※ 모델 개발 시 가상 데이터 생성 권장<br>",
+        "· 환자 input 데이터 예시 제공 (하단 첨부파일 다운로드 · 10건) ※ 모델 개발 시 가상 데이터 생성 권장<br>",
         "<b>4) 최종 산출물</b> : 참여 가능성 판정 + 판단 근거 + 각 환자에게 가장 적절한 임상시험 추천"
       ]
     },
