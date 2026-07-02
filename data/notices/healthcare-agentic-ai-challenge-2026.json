@@ -6,14 +6,8 @@
   "deadline": "2026-08-30",
   "title": "Healthcare Agentic AI Challenge 2026",
   "hero": "AIHC_Healthcare_AI_Agent_Challenge_2026.png",
-  "link": "mailto:phjpypy@g.skku.edu?subject=2026 Healthcare Agentic AI Challenge 참가신청서_팀명",
-  "linkText": "참가신청·문의 (phjpypy@g.skku.edu)",
-  "attachments": [
-    {
-      "file": "(양식)2026_Healthcare_AgenticAI_챌린지_신청서.xlsx",
-      "label": "참가신청서 양식 다운로드 (XLSX)"
-    }
-  ],
+  "link": "https://forms.gle/dfu9ngZwURTACipn8",
+  "linkText": "참가신청·제안서 제출 (Google Form)",
   "blocks": [
     {
       "p": [
@@ -92,12 +86,11 @@
       "p": [
         "<b>마.",
         "지원방법 및 일정</b><br>",
-        "1) (Early Bird) 연구용 API 사용료 지원을 받고자 하는 팀은 2026년 7월 15일까지 제안서 제출 → 심사를 통해 10팀 선정, 팀당 70달러(USD 70) 지원<br>",
-        "2) (최종 모델 제출) 2026년 8월 30일 ※ 제안서를 작성·제출하지 않은 팀도 제한 없이 최종 모델 제출 가능<br>",
-        "3) (발표 및 시상) 2026년 8월 31일<br>",
-        "4) 이메일 주소 : phjpypy@g.skku.edu<br>",
-        "5) 메일제목 : 2026 Healthcare Agentic AI Challenge 제안서(또는 최종제출)_팀명<br>",
-        "6) 파일이름 : 2026 Healthcare Agentic AI Challenge_팀명_팀장OOO"
+        "1) 참가 신청 및 제안서 제출 : 아래 Google Form으로 접수 (https://forms.gle/dfu9ngZwURTACipn8)<br>",
+        "2) (Early Bird) 연구용 API 사용료 지원을 받고자 하는 팀은 2026년 7월 15일까지 Google Form의 제안 항목을 작성 → 심사를 통해 10팀 선정, 팀당 70달러(USD 70) 지원<br>",
+        "3) (최종 모델 제출) 2026년 8월 30일 ※ 제안서를 작성·제출하지 않은 팀도 제한 없이 최종 모델 제출 가능<br>",
+        "4) (발표 및 시상) 2026년 8월 31일<br>",
+        "5) 문의 : phjpypy@g.skku.edu (담당자 박호진)"
       ]
     },
     {
