@@ -8,12 +8,14 @@
   "degree": "석사과정",
   "admit": "2026-spring",
   "email": "dawitcho@g.skku.edu",
-  "education": [],
+  "education": [
+    "B.S in Industrial Engineering, Sungkyunkwan University (2019 - 2026)",
+    "M.S in Industrial Engineering, Sungkyunkwan University (2026 – Present)"
+  ],
   "ri": [
-    "NLP",
-    "NER",
-    "Clinical Notes",
-    "Biomedical Text Mining"
+    "Clinical & Biomedical Natural Language Processing",
+    "Clinical Decision Support Systems",
+    "Representation Engineering for Language Models"
   ],
   "blocks": []
 }
