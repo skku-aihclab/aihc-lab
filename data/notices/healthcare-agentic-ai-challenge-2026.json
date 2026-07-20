@@ -7,7 +7,7 @@
   "title": "Healthcare Agentic AI Challenge 2026",
   "hero": "AIHC_Healthcare_AI_Agent_Challenge_2026.png",
   "link": "https://forms.gle/dfu9ngZwURTACipn8",
-  "linkText": "참가신청·제안서 제출 (Google Form)",
+  "linkText": "사전 등록·제안서 제출 (Google Form)",
   "attachments": [
     {
       "file": "synthetic-patients.json",
@@ -92,7 +92,7 @@
       "p": [
         "<b>마.",
         "지원방법 및 일정</b><br>",
-        "1) 산전 등록 및 제안서 제출 : 아래 Google Form으로 접수 (https://forms.gle/dfu9ngZwURTACipn8)<br>",
+        "1) 사전 등록 및 제안서 제출 : 아래 Google Form으로 접수 (https://forms.gle/dfu9ngZwURTACipn8)<br>",
         "2) (Early Bird) 연구용 API 사용료 지원을 받고자 하는 팀은 2026년 7월 15일까지 Google Form의 제안 항목을 작성 → 심사를 통해 10팀 선정, 팀당 70달러(USD 70) 지원<br>",
         "3) (최종 모델 제출) 2026년 8월 30일 ※ 제안서를 작성·제출하지 않은 팀도 제한 없이 최종 모델 제출 가능<br>",
         "4) (발표 및 시상) 2026년 8월 31일<br>",
