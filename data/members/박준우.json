@@ -7,13 +7,14 @@
   "init": "JP",
   "img": "박준우.jpeg",
   "degree": "학부연구생",
-  "email": "jw0528@skku.edu",
+  "email": "jw0528@g.skku.edu",
   "education": [
-    "M.S. Student, University of California, Irvine (UCI)"
+    "M.S. in Computer Science, University of California, Irvine (UCI)",
+    "B.S. in Computer Science & Engineering, Sungkyunkwan University (2024 - 2026)"
   ],
   "ri": [
-    "Multimodal Deep Learning",
-    "Molecular Toxicity Prediction"
+    "Multimodal Language Models",
+    "AI for Healthcare"
   ],
   "blocks": []
 }
