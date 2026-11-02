@@ -18,7 +18,19 @@
       "p": "<b>■ 구두 발표</b><br><br><b>신민영</b><br>Detection of Left-Right Imbalances in Resistance Training Using Wearable Sensor<br><i>헬스케어 세션</i>"
     },
     {
+      "img": "2025추계_신민영.jpeg",
+      "cap": "구두 발표 중인 신민영 연구원"
+    },
+    {
       "p": "<b>■ 포스터 발표</b><br><br><b>박준우</b><br>Multimodal Fusion Approach for Reliable Molecular Toxicity Prediction<br><br><b>조다윗</b><br>Instruction Tuning을 활용한 대규모 언어 모델(LLM) 기반 생물의학 분야의 개체명 인식 성능 향상"
+    },
+    {
+      "img": "2025추계_박준우.jpeg",
+      "cap": "박준우 연구원 포스터 — Multimodal Fusion Approach for Reliable Molecular Toxicity Prediction"
+    },
+    {
+      "img": "2025추계_조다윗.png",
+      "cap": "조다윗 연구원 포스터 — Instruction Tuning을 활용한 대규모 언어 모델(LLM) 기반 생물의학 분야의 개체명 인식 성능 향상"
     },
     {
       "p": [
@@ -27,4 +39,3 @@
     }
   ]
 }
-
