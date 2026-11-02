@@ -1,7 +1,15 @@
 [
   {
-    "term": "Spring 2026",
+    "term": "Fall 2026",
     "cur": true,
+    "c": [
+      "Data Mining",
+      "Data Structures with Algorithms"
+    ]
+  },
+  {
+    "term": "Spring 2026",
+    "cur": false,
     "c": [
       "Data Mining",
       "Text Analytics and NLP (Graduate)"
