@@ -1,7 +1,7 @@
 {
   "id": "study-ml-basics-2026",
   "tag": "논문 리뷰",
-  "topic": "머신러닝 기초 / 논문 리뷰",
+  "topic": "VLA 스터디",
   "members": "학부 연구생 일동",
   "posted": "2026-08-01",
   "title": "여름방학 VLA 스터디",
@@ -9,75 +9,78 @@
   "weeks": [
     {
       "no": 1,
-      "date": "2026-07-01",
-      "title": "주제 미정",
-      "presenter": "",
+      "date": "2026-08-06",
+      "title": "RT-1 / PaLM-E / RT-2 / π0 / Open X-Embodiment",
+      "presenter": "박진우, 서찬희, 강지원",
       "link": "",
       "linkText": "",
-      "blocks": []
+      "blocks": [
+        {
+          "p": "<b>1. RT-1</b> · 발표 박진우<br>RT-1: Robotics Transformer for Real-World Control at Scale<br><small>Google · RSS 2023 · 주제: Foundations of Vision-Language-Action · 핵심 개념: Scalable Robot Learning</small>"
+        },
+        {
+          "p": "<b>2. PaLM-E</b> · 발표 서찬희<br>PaLM-E: An Embodied Multimodal Language Model<br><small>Google · ICML 2023 · 주제: Foundations of Vision-Language-Action · 핵심 개념: Embodied Multimodal Reasoning</small>"
+        },
+        {
+          "p": "<b>3. RT-2</b> · 발표 박진우<br>RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control<br><small>Google · CoRL 2023 · 주제: Foundations of Vision-Language-Action · 핵심 개념: VLM to VLA</small>"
+        },
+        {
+          "p": "<b>4. π0</b> · 발표 강지원<br>π0: A Vision-Language-Action Flow Model for General Robot Control<br><small>Physical Intelligence · RSS 2025 · 주제: Advanced Action Modeling for Robot Control · 핵심 개념: Flow-Matching Action Generation</small>"
+        },
+        {
+          "p": "<b>5. Open X-Embodiment</b> · 발표 서찬희<br>Open X-Embodiment: Robotic Learning Datasets and RT-X Models<br><small>Google · ICRA 2024 · 주제: Open & Generalist Robot Foundation Models · 핵심 개념: Cross-Embodiment Data</small>"
+        }
+      ]
     },
     {
       "no": 2,
-      "date": "2026-07-08",
-      "title": "주제 미정",
-      "presenter": "",
+      "date": "2026-08-12",
+      "title": "ACT / Diffusion Policy / Octo / OpenVLA / π0.5",
+      "presenter": "서찬희, 박진우, 강지원",
       "link": "",
       "linkText": "",
-      "blocks": []
+      "blocks": [
+        {
+          "p": "<b>1. ACT</b> · 발표 서찬희<br>Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware<br><small>Tony Z. Zhao (Stanford University) · RSS 2023 · 주제: Advanced Action Modeling for Robot Control · 핵심 개념: Action Chunking</small>"
+        },
+        {
+          "p": "<b>2. Diffusion Policy</b> · 발표 박진우<br>Diffusion Policy: Visuomotor Policy Learning via Action Diffusion<br><small>Cheng Chi (Columbia University) · RSS 2023 · 주제: Advanced Action Modeling for Robot Control · 핵심 개념: Diffusion Action Generation</small>"
+        },
+        {
+          "p": "<b>3. Octo</b> · 발표 박진우<br>Octo: An Open-Source Generalist Robot Policy<br><small>Dibya Ghosh (UC Berkeley) · RSS 2024 · 주제: Open & Generalist Robot Foundation Models · 핵심 개념: Generalist Robot Policy</small>"
+        },
+        {
+          "p": "<b>4. OpenVLA</b> · 발표 서찬희<br>OpenVLA: An Open-Source Vision-Language-Action Model<br><small>Moo Jin Kim (Stanford University) · CoRL 2024 · 주제: Open & Generalist Robot Foundation Models · 핵심 개념: Open-Source VLA</small>"
+        },
+        {
+          "p": "<b>5. π0.5</b> · 발표 강지원<br>π0.5: a Vision-Language-Action Model with Open-World Generalization<br><small>Physical Intelligence · CoRL 2025 · 주제: Open & Generalist Robot Foundation Models · 핵심 개념: Open-World Generalization</small>"
+        }
+      ]
     },
     {
       "no": 3,
-      "date": "2026-07-15",
-      "title": "주제 미정",
-      "presenter": "",
+      "date": "2026-08-26",
+      "title": "SpatialVLA / GR00T N1 / OpenVLA-OFT / SmolVLA / π*0.6",
+      "presenter": "박진우, 서찬희, 강지원",
       "link": "",
       "linkText": "",
-      "blocks": []
-    },
-    {
-      "no": 4,
-      "date": "2026-07-22",
-      "title": "주제 미정",
-      "presenter": "",
-      "link": "",
-      "linkText": "",
-      "blocks": []
-    },
-    {
-      "no": 5,
-      "date": "2026-07-29",
-      "title": "주제 미정",
-      "presenter": "",
-      "link": "",
-      "linkText": "",
-      "blocks": []
-    },
-    {
-      "no": 6,
-      "date": "2026-08-05",
-      "title": "주제 미정",
-      "presenter": "",
-      "link": "",
-      "linkText": "",
-      "blocks": []
-    },
-    {
-      "no": 7,
-      "date": "2026-08-12",
-      "title": "주제 미정",
-      "presenter": "",
-      "link": "",
-      "linkText": "",
-      "blocks": []
-    },
-    {
-      "no": 8,
-      "date": "2026-08-19",
-      "title": "주제 미정",
-      "presenter": "",
-      "link": "",
-      "linkText": "",
-      "blocks": []
+      "blocks": [
+        {
+          "p": "<b>1. SpatialVLA</b> · 발표 박진우<br>SpatialVLA: Exploring Spatial Representations for Vision-Language-Action Models<br><small>Delin Qu · RSS 2025 · 주제: Advanced VLA Model · 핵심 개념: 3D Spatial Representation</small>"
+        },
+        {
+          "p": "<b>2. GR00T N1</b> · 발표 서찬희<br>GR00T N1: An Open Foundation Model for Generalist Humanoid Robots<br><small>Nvidia · arXiv 2025 · 주제: Advanced VLA Model · 핵심 개념: Data Pyramid</small>"
+        },
+        {
+          "p": "<b>3. OpenVLA-OFT</b> · 발표 박진우<br>Fine-Tuning Vision-Language-Action Models: Optimizing Speed and Success<br><small>Moo Jin Kim (Stanford University) · RSS 2025 · 주제: Efficient VLA Adaptation & Deployment · 핵심 개념: Optimized VLA Fine-Tuning</small>"
+        },
+        {
+          "p": "<b>4. SmolVLA</b> · 발표 서찬희<br>SmolVLA: A Compact Vision-Language-Action Model for Efficient Robotic Manipulation<br><small>Hugging Face · arXiv 2025 · 주제: Efficient VLA Adaptation & Deployment · 핵심 개념: Asynchronous Inference</small>"
+        },
+        {
+          "p": "<b>5. π*0.6</b> · 발표 강지원<br>π*0.6: a VLA That Learns From Experience<br><small>Physical Intelligence · arXiv 2025 · 주제: VLA Post-Training & Self-Improvement · 핵심 개념: VLA + Reinforcement Learning</small>"
+        }
+      ]
     }
   ]
 }

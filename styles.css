@@ -316,6 +316,8 @@ img{max-width:100%;display:block}
 .wk-body{display:none;padding:6px 20px 22px;border-top:1px solid var(--hairline-soft)}
 .wk.open .wk-body{display:block}
 .wk-body p{font-size:16px;line-height:1.8;color:var(--charcoal);margin:14px 0}
+.wk-body p + p{border-top:1px solid var(--hairline-soft);padding-top:14px}
+.wk-body p small{font-size:13.5px;color:var(--steel)}
 .wk-meta{font-size:13.5px;font-weight:600;color:var(--slate);margin:14px 0 0}
 .wk-empty{color:var(--steel)}
 /* 발표자료(PPT/PDF) 임베드 — 옆으로 넘기며 보기 */

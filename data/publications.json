@@ -9,7 +9,7 @@
     {
       "a": "Y. Lim, I. Park, S. Lee",
       "t": "Trustworthy ICU Care: an Uncertainty-Aware Reinforcement Learning Framework for Safer Drug Dosing",
-      "v": "Submitted",
+      "v": "Computer Methods and Programs in Biomedicine",
       "s": "prog"
     },
     {
@@ -27,25 +27,37 @@
     {
       "a": "M. Shin, D. Cho, S. Lee",
       "t": "A Wearable Multimodal Measurement System for Quantifying Bilateral Asymmetry in Resistance Exercise",
-      "v": "Submitted",
+      "v": "IEEE Transactions on Instrumentation and Measurement",
       "s": "prog"
     },
     {
       "a": "Y. Choi, J. Kang, J. Park, M. Shin, D. Cho, S. Lee",
       "t": "Biokinetic Data Fusion for Practical 1RM Estimation: A Non-Exhaustive Strength Assessment Model for Sports Medicine",
-      "v": "Submitted",
+      "v": "npj Digital Medicine",
       "s": "prog"
     },
     {
       "a": "I. Cho, H. Shin, D. Cho, B. Park, S. Lee",
-      "t": "A Bilingual Multi-Institutional Nursing Notes Dataset and Method for Extracting Fall-Risk Phenotypes",
+      "t": "A Bilingual Multi-Institutional Nursing Notes Dataset and Method for Extracting Fall-Risk Phenotypes to Support Evidence-Based Nursing Practice",
       "v": "Submitted",
       "s": "prog"
     },
     {
       "a": "J. Kang, M. Kim, J. Lee, J. Park, S. Lee",
       "t": "Towards Generalizable Anomaly Detection: A Concept Drift-Aware Framework for Industrial Robots using Time Series Foundation Models",
-      "v": "Submitted",
+      "v": "J. of Intelligent Manufacturing",
+      "s": "prog"
+    },
+    {
+      "a": "J. Park, M. Shin, S. Lee",
+      "t": "Multi-Granular Rationale-Guided Molecular LLM for Property Prediction",
+      "v": "Journal of Cheminformatics",
+      "s": "prog"
+    },
+    {
+      "a": "Y. Choi, M. Shin, D. Cho, S. Lee",
+      "t": "Video-Guided Multi-View Distillation for Label-Free Exercise Repetition Localization under Cross-Modal Misalignment",
+      "v": "Information Fusion",
       "s": "prog"
     }
   ],
@@ -96,7 +108,7 @@
       "y": "2022",
       "a": "J. Yun, J. Sim, S. Lee, Y. Yun*",
       "t": "Stronger association of perceived health with socio-economic inequality during COVID-19 pandemic than pre-pandemic era",
-      "v": "BMC Public Health, vol. 22(1)",
+      "v": "BMC Public Health, vol. 22(1), pp. 1-13",
       "d": "https://doi.org/10.1186/s12889-022-14176-8"
     },
     {
@@ -116,7 +128,7 @@
     {
       "y": "2021",
       "a": "Y. Yun*, S. Oh, S. Sim, S. Lee, E. Sohn",
-      "t": "Development and validation of the Health-Friendly Activity Index",
+      "t": "Development and validation of the Health-Friendly Activity Index: an assessment tool to comprehensively measure health-friendly activities of corporations or organisations",
       "v": "BMJ Open",
       "d": "https://doi.org/10.1136/bmjopen-2021-048768"
     },
@@ -137,27 +149,27 @@
     {
       "y": "2020",
       "a": "Y. Yun*, J. Sim, Y. Kim, S. Lee, K. Kim",
-      "t": "Consumers’ consciousness of health-friendly products and services",
+      "t": "Consumers’ consciousness of health-friendly products and services and its association with sociodemographic characteristics and health status: a cross-sectional survey of the Korean general population",
       "v": "BMJ Open",
       "d": "https://doi.org/10.1136/bmjopen-2019-035591"
     },
     {
       "y": "2019",
-      "a": "X. Zhong, S. Lee, C. Zhao, et al., J. Li*",
+      "a": "X. Zhong, S. Lee, C. Zhao, H. Lee, P. Bain, T. Kundinger, C. Sommers, C. Baker, J. Li*",
       "t": "Reducing COPD readmissions through predictive modeling and incentive-based interventions",
       "v": "Health Care Management Science, vol. 22(1), pp. 121-139",
       "d": "https://doi.org/10.1007/s10729-017-9426-2"
     },
     {
       "y": "2019",
-      "a": "S. Lee, S. Wang, P. Bain, et al., J. Li*",
+      "a": "S. Lee, S. Wang, P. Bain, T. Kundinger, C. Sommers, C. Baker, J. Li*",
       "t": "Modeling and Analysis of Postdischarge Intervention Process to Reduce COPD Readmissions",
       "v": "IEEE Transactions on Automation Science and Engineering, vol. 16(1), pp. 21-34",
       "d": "https://doi.org/10.1109/TASE.2018.2801318"
     },
     {
       "y": "2018",
-      "a": "S. Lee, S. Wang, P. Bain, et al., J. Li*",
+      "a": "S. Lee, S. Wang, P. Bain, C. Baker, T. Kundinger, C. Sommers, J. Li*",
       "t": "Reducing COPD Readmissions: A Causal Bayesian Network Model",
       "v": "IEEE Robotics and Automation Letters, vol. 3(4), pp. 4046-4053",
       "d": "https://doi.org/10.1109/LRA.2018.2861084"
@@ -179,6 +191,12 @@
   ],
   "conferences": [
     {
+      "y": "2026",
+      "a": "M. Shin, S. Lee",
+      "t": "Task-Level Selection as a Strong Baseline for Routing Heterogeneous Molecular Experts",
+      "v": "Asian Conf. on Computer Vision (ACCV) Workshop on MM4SciReal, Osaka, Japan"
+    },
+    {
       "y": "2018",
       "a": "S. Lee, E. Nemati, J. Kuang",
       "t": "Configurable Pulmonary-Tuned Privacy Preservation Algorithm for Mobile Devices",
@@ -186,7 +204,7 @@
     },
     {
       "y": "2017",
-      "a": "S. Lee, X. Zhong, H. Lee, et al., J. Li",
+      "a": "S. Lee, X. Zhong, H. Lee, C. Zhao, P. Bain, T. Kundinger, C. Sommers, C. Baker, J. Li",
       "t": "Incentive-Based Optimal Intervention Policy to Reduce Hospital Readmissions for COPD Patients",
       "v": "13th Conf. on Automation Science and Engineering (CASE), Xi’an, China"
     }
