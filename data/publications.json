@@ -52,11 +52,17 @@
       "a": "J. Park, M. Shin, S. Lee",
       "t": "Multi-Granular Rationale-Guided Molecular LLM for Property Prediction",
       "v": "Journal of Cheminformatics",
-      "s": "prog"
+      "s": "rev"
     },
     {
       "a": "Y. Choi, M. Shin, D. Cho, S. Lee",
       "t": "Video-Guided Multi-View Distillation for Label-Free Exercise Repetition Localization under Cross-Modal Misalignment",
+      "v": "Information Fusion",
+      "s": "prog"
+    },
+    {
+      "a": "S. Lee",
+      "t": "Beyond Reliability: An Interventional Framework for Auditing Conditional Information Sufficiency in Chest X-ray and EHR Fusion",
       "v": "Information Fusion",
       "s": "prog"
     }
